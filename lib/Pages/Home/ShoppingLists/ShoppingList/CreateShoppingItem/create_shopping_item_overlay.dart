@@ -16,28 +16,31 @@ class CreateShoppingItemOverlay extends OverlayEntry {
                 TextEditingController();
             final TextEditingController quantityTFController =
                 TextEditingController();
-            return BlocProvider(
-              create: (_) => CreateShoppingItemCubit(
-                appBloc: context.read<AppBloc>(),
-              ),
-              child:
-                  BlocBuilder<CreateShoppingItemCubit, CreateShoppingItemState>(
-                builder: (context, state) {
-                  switch (state.status) {
-                    case CreateShoppingItemStatus.ready:
-                      return _LoadedScreen(
-                        createShoppingListCubit:
-                            context.read<CreateShoppingItemCubit>(),
-                        shoppingList: shoppingList,
-                        shoppingListCubit: shoppingListCubit,
-                        noteTFController: noteTFController,
-                        quantityTFController: quantityTFController,
-                      );
-                    default:
-                      return _ErrorScreen(
-                          cubit: context.read<CreateShoppingItemCubit>());
-                  }
-                },
+            return Material(
+              color: Colors.black.withOpacity(0.2),
+              child: BlocProvider(
+                create: (_) => CreateShoppingItemCubit(
+                  appBloc: context.read<AppBloc>(),
+                ),
+                child: BlocBuilder<CreateShoppingItemCubit,
+                    CreateShoppingItemState>(
+                  builder: (context, state) {
+                    switch (state.status) {
+                      case CreateShoppingItemStatus.ready:
+                        return _LoadedScreen(
+                          createShoppingListCubit:
+                              context.read<CreateShoppingItemCubit>(),
+                          shoppingList: shoppingList,
+                          shoppingListCubit: shoppingListCubit,
+                          noteTFController: noteTFController,
+                          quantityTFController: quantityTFController,
+                        );
+                      default:
+                        return _ErrorScreen(
+                            cubit: context.read<CreateShoppingItemCubit>());
+                    }
+                  },
+                ),
               ),
             );
           },
@@ -99,26 +102,25 @@ class _LoadedScreen extends StatelessWidget {
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.95,
-        height: 200,
-        child: Center(
-          child: CurrentlyEditingItemTile(
-            item: ShoppingListItem.empty,
-            shoppingListCubit: ShoppingListCubit(
-                appBloc: AppBloc(), shoppingList: ShoppingList.empty),
-            noteTFController: noteTFController,
-            quantityTFController: quantityTFController,
-            onClose: () => shoppingListCubit.removeOverlay(),
-            onSave: () => createShoppingListCubit.createItem(
-                item: ShoppingListItem(
-                  quantity: double.parse(quantityTFController.value.text == ''
-                      ? '1'
-                      : quantityTFController.value.text),
-                  note: noteTFController.value.text,
-                  shoppingListId: shoppingList.id,
-                  checked: false,
-                ),
-                shoppingListCubit: shoppingListCubit),
-          ),
+        height: 270,
+        child: CurrentlyEditingItemTile(
+          title: "Create New Item",
+          item: ShoppingListItem.empty,
+          shoppingListCubit: ShoppingListCubit(
+              appBloc: AppBloc(), shoppingList: ShoppingList.empty),
+          noteTFController: noteTFController,
+          quantityTFController: quantityTFController,
+          onClose: () => shoppingListCubit.removeOverlay(),
+          onSave: () => createShoppingListCubit.createItem(
+              item: ShoppingListItem(
+                quantity: double.parse(quantityTFController.value.text == ''
+                    ? '1'
+                    : quantityTFController.value.text),
+                note: noteTFController.value.text,
+                shoppingListId: shoppingList.id,
+                checked: false,
+              ),
+              shoppingListCubit: shoppingListCubit),
         ),
       ),
     );

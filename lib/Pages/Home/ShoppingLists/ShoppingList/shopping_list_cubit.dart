@@ -110,7 +110,6 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
   void removeOverlay() {
     state.overlayEntry!.remove();
     emit(state.copyWith(status: state.status, overlayEntry: null));
-    getShoppingList();
   }
 
   void createOverlay(BuildContext context) {
@@ -121,10 +120,3 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
     emit(state.copyWith(status: state.status, overlayEntry: overlayEntry));
   }
 }
-
-// extension on ShoppingListItem {
-//   static final _editing = Expando<bool>();
-
-//   bool get editing => _editing[this] ?? false;
-//   set editing(bool value) => _editing[this] = value;
-// }

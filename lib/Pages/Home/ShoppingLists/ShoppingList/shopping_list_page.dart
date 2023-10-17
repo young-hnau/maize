@@ -318,6 +318,7 @@ class CurrentlyEditingItemTile extends StatelessWidget {
     super.key,
     required this.shoppingListCubit,
     required this.item,
+    this.title,
     required this.onClose,
     required this.onSave,
     required this.noteTFController,
@@ -325,6 +326,7 @@ class CurrentlyEditingItemTile extends StatelessWidget {
   });
 
   final ShoppingListItem item;
+  final String? title;
   final ShoppingListCubit shoppingListCubit;
   final Function onSave;
   final Function onClose;
@@ -358,6 +360,12 @@ class CurrentlyEditingItemTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              if (title != null && title!.isNotEmpty)
+                Text(
+                  title.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 16),
+                ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
