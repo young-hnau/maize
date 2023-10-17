@@ -26,6 +26,9 @@ class RecipePage extends StatelessWidget {
             RecipeCubit(appBloc: context.read<AppBloc>(), recipe: recipe),
         child: BlocBuilder<RecipeCubit, RecipeState>(
           buildWhen: (previous, current) {
+            if (previous.recipe != current.recipe) {
+              return true;
+            }
             if (previous.editingRecipe?.name != current.editingRecipe?.name) {
               return false;
             }

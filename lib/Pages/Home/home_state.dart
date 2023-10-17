@@ -10,12 +10,10 @@ class HomeState extends Equatable {
   const HomeState({
     required this.status,
     required this.onScreen,
-    this.uri,
     this.errorMessage,
   });
 
   final HomeStatus status;
-  final Uri? uri;
   final String? errorMessage;
   final Widget onScreen;
 
@@ -29,7 +27,6 @@ class HomeState extends Equatable {
   }) {
     return HomeState(
       status: status,
-      uri: uri ?? this.uri,
       errorMessage: errorMessage ?? this.errorMessage,
       onScreen: onScreen ?? this.onScreen,
     );
@@ -38,7 +35,6 @@ class HomeState extends Equatable {
   @override
   List<Object?> get props => [
         status,
-        uri,
         errorMessage,
         onScreen,
       ];
