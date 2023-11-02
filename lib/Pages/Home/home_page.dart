@@ -81,7 +81,7 @@ class _Drawer extends Drawer {
                       width: 50,
                       height: 50,
                       child: Image.network(
-                          appBloc.state.mealieRepository.uri
+                          appBloc.repo.uri
                               .replace(
                                   path:
                                       '/api/media/users/${appBloc.state.user.id}/profile.webp')

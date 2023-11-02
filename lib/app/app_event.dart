@@ -41,3 +41,12 @@ class LoadUser extends AppEvent {
 class AppStarted extends AppEvent {
   const AppStarted();
 }
+
+class UserLoggedIn extends AppEvent {
+  const UserLoggedIn({required this.token});
+
+  final String token;
+
+  @override
+  List<Object?> get props => [token];
+}

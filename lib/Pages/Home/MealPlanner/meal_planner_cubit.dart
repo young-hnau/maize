@@ -19,7 +19,7 @@ class MealPlannerCubit extends Cubit<MealPlannerState> {
 
   Future<void> logout() async {
     final SharedPreferences p = await SharedPreferences.getInstance();
-    p.remove('__user_token__');
+    p.remove('__access_token__');
     appBloc.refreshApp();
   }
 }

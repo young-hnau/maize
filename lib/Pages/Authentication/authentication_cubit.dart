@@ -17,8 +17,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   StreamSubscription? streamSub;
 
   void _initialize() {
-    streamSub =
-        appBloc.state.mealieRepository.errorStream.stream.listen((message) {
+    streamSub = appBloc.repo.errorStream.stream.listen((message) {
       emit(state.copyWith(
         status: AuthenticationStatus.invalid,
         errorMessage: message.toString(),
@@ -29,24 +28,32 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> login(String username, String password) async {
     emit(state.copyWith(status: AuthenticationStatus.loading));
 
-    if (!appBloc.state.mealieRepository.uri.isAbsolute) {
+    if (!appBloc.repo.uri.isAbsolute) {
       emit(state.copyWith(
           status: AuthenticationStatus.invalid,
           errorMessage: "No domain has been provided."));
       return;
     }
-    final String? token = await appBloc.state.mealieRepository.getToken(
-        username: username, password: password, save: state.rememberMe);
+    final String? token = await appBloc.repo
+        .login(username: username, password: password, save: state.rememberMe);
 
-    emit(state.copyWith(status: AuthenticationStatus.valid));
+    if (token == null) {
+      // Token is null, therefore authentication failed
+      emit(state.copyWith(
+          status: AuthenticationStatus.invalid,
+          errorMessage: "Invalid username or password."));
+    } else {
+      // Token is not null, therefore authentication was successful
+      emit(state.copyWith(status: AuthenticationStatus.valid));
 
-    await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 500));
 
-    if (streamSub != null) {
-      streamSub!.cancel();
+      if (streamSub != null) {
+        streamSub!.cancel();
+      }
+
+      appBloc.add(UserLoggedIn(token: token));
     }
-
-    appBloc.getRefreshToken(token.toString());
   }
 
   void reset() {

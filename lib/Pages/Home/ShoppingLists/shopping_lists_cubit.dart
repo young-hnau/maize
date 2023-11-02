@@ -18,7 +18,7 @@ class ShoppingListsCubit extends Cubit<ShoppingListsState> {
   Future<void> _getShoppingLists() async {
     emit(state.copyWith(status: ShoppingListsStatus.loading));
 
-    List<ShoppingList>? shoppingLists = await appBloc.state.mealieRepository
+    List<ShoppingList>? shoppingLists = await appBloc.repo
         .getAllShoppingLists(token: appBloc.state.user.refreshToken);
 
     emit(state.copyWith(

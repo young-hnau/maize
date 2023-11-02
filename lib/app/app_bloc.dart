@@ -11,6 +11,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppStarted>(_initializeApp);
     on<AppLogoutRequested>(_logout);
     on<AppUserChanged>(_appUserChanged);
+    on<UserLoggedIn>(_userLoggedIn);
 
     add(const AppStarted());
   }
@@ -34,44 +35,28 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(state.copyWith(
           status: AppStatus.initialized, mealieRepository: mealieRepository));
 
-      final String? token = p.getString("__user_token__");
-      if (token == null || token == "null") {
-        emit(state.copyWith(status: AppStatus.unauthenticated));
-      } else {
-        getRefreshToken(token);
-      }
+      _loadUser();
     }
   }
 
   Future<void> _logout(AppLogoutRequested event, Emitter<AppState> emit) async {
     SharedPreferences p = await SharedPreferences.getInstance();
-    p.remove("__user_token__");
+    p.remove("__access_token__");
+
+    // state._mealieRepository.authenticated.close();
+    // state._mealieRepository.errorStream.close();
+    // state._mealieRepository.refreshToken.close();
+
     emit(state.copyWith(status: AppStatus.unauthenticated));
   }
 
-  void refreshApp() {
-    add(const AppStarted());
-  }
-
-  Future<void> getRefreshToken(String token) async {
-    final String? refreshToken =
-        await state.mealieRepository.getRefreshToken(token: token);
-
-    if (refreshToken == null) {
-      add(AppLogoutRequested());
-    } else {
-      _loadUser(token, refreshToken);
-    }
-  }
-
-  Future<void> _loadUser(String token, String refreshToken) async {
-    final User? user =
-        await state.mealieRepository.getUser(token: refreshToken);
+  Future<void> _loadUser({String? token}) async {
+    final User? user = await state._mealieRepository.getUser(token: token);
 
     if (user == null || user.isEmpty) {
       add(AppLogoutRequested());
     } else {
-      state.mealieRepository.refreshToken.stream.listen(
+      state._mealieRepository.refreshToken.stream.listen(
         (event) =>
             add(AppUserChanged(user: state.user.copyWith(refreshToken: event))),
       );
@@ -79,8 +64,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
+  Future<void> _userLoggedIn(UserLoggedIn event, Emitter<AppState> emit) async {
+    _loadUser(token: event.token);
+  }
+
   Future<void> _appUserChanged(
       AppUserChanged event, Emitter<AppState> emit) async {
     emit(state.copyWith(status: AppStatus.authenticated, user: event.user));
+  }
+
+  void refreshApp() {
+    add(const AppStarted());
+  }
+
+  /// Returns an instance of MealieRepository with the most up to date token data
+  MealieRepository get repo {
+    return state._mealieRepository.copyWith(user: state.user);
   }
 }

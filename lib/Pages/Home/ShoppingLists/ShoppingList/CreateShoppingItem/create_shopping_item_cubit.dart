@@ -18,8 +18,7 @@ class CreateShoppingItemCubit extends Cubit<CreateShoppingItemState> {
   Future<void> createItem(
       {required ShoppingListItem item,
       required ShoppingListCubit shoppingListCubit}) async {
-    await appBloc.state.mealieRepository.createOneShoppingListItem(
-        token: appBloc.state.user.refreshToken, item: item);
+    await appBloc.repo.createOneShoppingListItem(item: item);
     shoppingListCubit.removeOverlay();
   }
 

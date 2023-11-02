@@ -101,9 +101,8 @@ class _RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = appBloc.state.mealieRepository.uri
-        .replace(path: recipe.imagePath)
-        .toString();
+    final String imageUrl =
+        appBloc.repo.uri.replace(path: recipe.imagePath).toString();
     return InkWell(
       onTap: () => homeCubit.setScreen(RecipePage(recipe: recipe)),
       child: Card(

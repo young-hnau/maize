@@ -23,8 +23,7 @@ class RecipeCubit extends Cubit<RecipeState> {
       Recipe? recipe;
       if (_recipe.slug != null) {
         emit(state.copyWith(status: RecipeStatus.loading));
-        recipe = await appBloc.state.mealieRepository.getRecipe(
-            token: appBloc.state.user.refreshToken, slug: _recipe.slug!);
+        recipe = await appBloc.repo.getRecipe(slug: _recipe.slug!);
 
         if (recipe == null) {
           throw Exception("An unknown error occuried while getting recipes");
@@ -62,9 +61,8 @@ class RecipeCubit extends Cubit<RecipeState> {
   }
 
   Future<void> setRating(int rating) async {
-    await appBloc.state.mealieRepository.updateOneRecipe(
-        token: appBloc.state.user.refreshToken,
-        recipe: state.recipe!.copyWith(rating: rating));
+    await appBloc.repo
+        .updateOneRecipe(recipe: state.recipe!.copyWith(rating: rating));
     getRecipe();
   }
 
@@ -80,8 +78,7 @@ class RecipeCubit extends Cubit<RecipeState> {
   }
 
   Future<void> saveRecipe() async {
-    await appBloc.state.mealieRepository.updateOneRecipe(
-        token: appBloc.state.user.refreshToken, recipe: state.editingRecipe!);
+    await appBloc.repo.updateOneRecipe(recipe: state.editingRecipe!);
     getRecipe();
   }
 

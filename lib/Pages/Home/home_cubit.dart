@@ -15,7 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
   final AppBloc appBloc;
 
   Future<void> _initialize() async {
-    appBloc.state.mealieRepository.errorStream.stream.listen((message) {
+    appBloc.repo.errorStream.stream.listen((message) {
       emit(state.copyWith(
         status: HomeStatus.error,
         errorMessage: message.toString(),

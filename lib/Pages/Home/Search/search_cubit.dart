@@ -25,9 +25,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> getRecipes({int pageKey = 1}) async {
     try {
-      List<Recipe>? recipes =
-          await appBloc.state.mealieRepository.getAllRecipes(
-        token: appBloc.state.user.refreshToken,
+      List<Recipe>? recipes = await appBloc.repo.getAllRecipes(
         search: _searchQuery,
         page: pageKey,
         perPage: _pageSize,

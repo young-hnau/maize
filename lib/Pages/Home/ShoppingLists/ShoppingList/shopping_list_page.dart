@@ -271,21 +271,21 @@ class _ShoppingItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _noteTFController =
+    final TextEditingController noteTFController =
         TextEditingController(text: item.note);
-    final TextEditingController _quantityTFController =
+    final TextEditingController quantityTFController =
         TextEditingController(text: item.quantity.toInt().toString());
     if ((item.extras! as Map<String, dynamic>)['editing'] ?? false) {
       return CurrentlyEditingItemTile(
         shoppingListCubit: shoppingListCubit,
         item: item,
-        noteTFController: _noteTFController,
-        quantityTFController: _quantityTFController,
+        noteTFController: noteTFController,
+        quantityTFController: quantityTFController,
         onClose: () => shoppingListCubit.toggleEditing(item),
         onSave: () => shoppingListCubit.updateItem(
           item,
-          note: _noteTFController.value.text,
-          quantity: double.parse(_quantityTFController.value.text),
+          note: noteTFController.value.text,
+          quantity: double.parse(quantityTFController.value.text),
         ),
       );
     }

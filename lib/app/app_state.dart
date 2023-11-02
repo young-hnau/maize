@@ -10,11 +10,12 @@ enum AppStatus {
 }
 
 class AppState extends Equatable {
-  const AppState._({
-    required this.status,
-    User? user,
-    required this.mealieRepository,
-  }) : user = user ?? User.empty;
+  const AppState._(
+      {required this.status,
+      User? user,
+      required MealieRepository mealieRepository})
+      : user = user ?? User.empty,
+        _mealieRepository = mealieRepository;
 
   AppState.uninitialized()
       : this._(
@@ -28,7 +29,7 @@ class AppState extends Equatable {
 
   final AppStatus status;
   final User user;
-  final MealieRepository mealieRepository;
+  final MealieRepository _mealieRepository;
 
   AppState copyWith({
     AppStatus? status,
@@ -38,10 +39,10 @@ class AppState extends Equatable {
     return AppState._(
       status: status ?? this.status,
       user: user ?? this.user,
-      mealieRepository: mealieRepository ?? this.mealieRepository,
+      mealieRepository: mealieRepository ?? _mealieRepository,
     );
   }
 
   @override
-  List<Object?> get props => [status, user, mealieRepository];
+  List<Object?> get props => [status, user, _mealieRepository];
 }

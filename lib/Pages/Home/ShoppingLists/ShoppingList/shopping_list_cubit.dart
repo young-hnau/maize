@@ -22,9 +22,8 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
   Future<void> getShoppingList() async {
     emit(state.copyWith(status: ShoppingListStatus.loading));
 
-    ShoppingList? shoppingList = await appBloc.state.mealieRepository
-        .getOneShoppingList(
-            token: appBloc.state.user.refreshToken, list: _shoppingList);
+    ShoppingList? shoppingList =
+        await appBloc.repo.getOneShoppingList(list: _shoppingList);
 
     if (shoppingList == null) {
       emit(state.copyWith(
@@ -63,8 +62,7 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
   Future<void> checkItem(ShoppingListItem item) async {
     item = item.copyWith(checked: !item.checked);
 
-    await appBloc.state.mealieRepository.updateOneShoppingListItem(
-        token: appBloc.state.user.refreshToken, item: item);
+    await appBloc.repo.updateOneShoppingListItem(item: item);
     getShoppingList();
   }
 
@@ -94,16 +92,15 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
     String? note,
     double? quantity,
   }) async {
-    item = item.copyWith(quantity: quantity, note: note);
+    item = item
+        .copyWith(quantity: quantity, note: note, extras: {'editing': null});
 
-    await appBloc.state.mealieRepository.updateOneShoppingListItem(
-        token: appBloc.state.user.refreshToken, item: item);
+    await appBloc.repo.updateOneShoppingListItem(item: item);
     getShoppingList();
   }
 
   Future<void> deleteItem(ShoppingListItem item) async {
-    await appBloc.state.mealieRepository.deleteOneShoppingListItem(
-        token: appBloc.state.user.refreshToken, item: item);
+    await appBloc.repo.deleteOneShoppingListItem(item: item);
     getShoppingList();
   }
 

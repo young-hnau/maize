@@ -24,6 +24,7 @@ part 'Models/comment.dart';
 class MealieRepository {
   MealieRepository({
     required this.uri,
+    this.user,
   });
 
   final Uri uri;
@@ -31,6 +32,14 @@ class MealieRepository {
   final StreamController authenticated = StreamController<bool>();
   final StreamController refreshToken = StreamController<String>.broadcast();
   final StreamController errorStream = StreamController<String>.broadcast();
+  final User? user;
+
+  MealieRepository copyWith({User? user, Uri? uri}) {
+    return MealieRepository(
+      uri: uri ?? this.uri,
+      user: user ?? this.user,
+    );
+  }
 
   Future<bool> uriIsValid({bool save = false}) async {
     final Uri uri = this.uri.replace(path: "/api/app/about");
@@ -52,7 +61,17 @@ class MealieRepository {
     }
   }
 
-  Future<String?> getToken({
+  /// Logs in the user and optionally saves the Access Token to the device.
+  /// Returns null if no access token can be obtained.
+  ///
+  /// Input:
+  /// - username
+  /// - password
+  /// - save (optional)
+  ///
+  /// Return:
+  /// - access token
+  Future<String?> login({
     required String username,
     required String password,
     bool save = false,
@@ -69,7 +88,7 @@ class MealieRepository {
 
       if (save) {
         final SharedPreferences p = await SharedPreferences.getInstance();
-        p.setString("__user_token__", token.toString());
+        p.setString("__access_token__", token.toString());
       }
     } on DioException catch (err) {
       if (err.response?.statusCode == 401) {
@@ -92,25 +111,87 @@ class MealieRepository {
     return token;
   }
 
-  Future<String?> getRefreshToken({required String token}) async {
+  /// Gets a refresh token with either the access token or another refresh token.
+  /// If input token is invalid, attempts to read access token from device.
+  /// Sinks 'false' to authenticated stream if neither provided or saved token is valid.
+  /// Returns null if no refresh token can be obtained.
+  ///
+  /// Input:
+  /// - token (access or refresh)
+  ///
+  /// Return:
+  /// - refresh token
+  Future<String?> _getRefreshToken({String? token}) async {
     final Uri uri = this.uri.replace(path: '/api/auth/refresh');
     final Options options =
         Options(headers: {'Authorization': 'Bearer $token'});
     String? refreshToken;
 
+    // // If we are not provided a token, attempt to read one from the device
+    // if (token == null) {
+    //   token = await _getTokenFromDevice();
+    //   if (token == null) {
+    //     this.authenticated.add(false);
+    //   }
+    // }
+
     try {
+      if (token == null) {
+        throw DioException(requestOptions: RequestOptions());
+      }
+
       Response response = await dio.getUri(uri, options: options);
       refreshToken = response.data['access_token'];
       this.refreshToken.add(refreshToken);
     } on DioException {
-      this.authenticated.add(false);
+      // Refresh token has expired, try the access token
+      try {
+        token = await _getTokenFromDevice();
+        if (token == null) {
+          throw DioException(requestOptions: RequestOptions());
+        }
+
+        final Options options =
+            Options(headers: {'Authorization': 'Bearer $token'});
+
+        Response response = await dio.getUri(uri, options: options);
+        refreshToken = response.data['access_token'];
+        this.refreshToken.add(refreshToken);
+      } on DioException {
+        // Both refresh token and access token have expired
+        this.authenticated.add(false);
+      }
     }
 
     return refreshToken;
   }
 
-  Future<User?> getUser({required String token}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+  /// Attempts to read the Access Token from on device
+  /// Returns null if none is found
+  ///
+  /// Return:
+  /// - access token
+  Future<String?> _getTokenFromDevice() async {
+    final SharedPreferences p = await SharedPreferences.getInstance();
+    final String? accessToken = p.getString("__access_token__");
+
+    if (accessToken == null || accessToken == "null") {
+      return null;
+    }
+
+    return accessToken;
+  }
+
+  /// Gets the user from Mealie.
+  ///
+  /// If no token is provided, an attempt will be made to get one from on device.
+  /// If no valid token can be obtained, 'false' will be sunk into {authenticated} stream.
+  ///
+  /// Return:
+  /// - user
+  Future<User?> getUser({String? token}) async {
+    final String? refreshToken = await _getRefreshToken(token: token);
+    if (refreshToken == null) return null;
 
     final Uri uri = this.uri.replace(path: '/api/users/self');
     final Options options =
@@ -134,7 +215,7 @@ class MealieRepository {
 
   Future<List<ShoppingList>?> getAllShoppingLists(
       {required String token}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+    final String? refreshToken = await _getRefreshToken(token: token);
 
     final Uri uri = this.uri.replace(path: '/api/groups/shopping/lists');
     final Options options =
@@ -158,9 +239,9 @@ class MealieRepository {
     return shoppingLists;
   }
 
-  Future<ShoppingList?> getOneShoppingList(
-      {required String token, required ShoppingList list}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+  Future<ShoppingList?> getOneShoppingList({required ShoppingList list}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri =
         this.uri.replace(path: '/api/groups/shopping/lists/${list.id}');
@@ -183,8 +264,9 @@ class MealieRepository {
   }
 
   Future<void> updateOneShoppingListItem(
-      {required String token, required ShoppingListItem item}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+      {required ShoppingListItem item}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri =
         this.uri.replace(path: '/api/groups/shopping/items/${item.id}');
@@ -204,8 +286,9 @@ class MealieRepository {
   }
 
   Future<void> deleteOneShoppingListItem(
-      {required String token, required ShoppingListItem item}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+      {required ShoppingListItem item}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri =
         this.uri.replace(path: '/api/groups/shopping/items/${item.id}');
@@ -224,8 +307,9 @@ class MealieRepository {
   }
 
   Future<void> createOneShoppingListItem(
-      {required String token, required ShoppingListItem item}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+      {required ShoppingListItem item}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri = this.uri.replace(path: '/api/groups/shopping/items');
     final Options options = Options(
@@ -245,7 +329,6 @@ class MealieRepository {
   }
 
   Future<List<Recipe>?> getAllRecipes({
-    required String token,
     int? page,
     int? perPage,
     String? orderBy,
@@ -256,7 +339,8 @@ class MealieRepository {
     bool? requireAllFoods,
     String? search,
   }) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
     List<Recipe>? recipes;
 
     final Map<String, dynamic> queryParameters = {};
@@ -300,10 +384,10 @@ class MealieRepository {
   }
 
   Future<Recipe?> getRecipe({
-    required String token,
     required String slug,
   }) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
     Recipe? recipe;
 
     final Uri uri = this.uri.replace(path: '/api/recipes/$slug');
@@ -326,9 +410,9 @@ class MealieRepository {
     return recipe;
   }
 
-  Future<void> updateOneRecipe(
-      {required String token, required Recipe recipe}) async {
-    final String? refreshToken = await getRefreshToken(token: token);
+  Future<void> updateOneRecipe({required Recipe recipe}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri = this.uri.replace(path: '/api/recipes/${recipe.slug}');
     final Options options =
