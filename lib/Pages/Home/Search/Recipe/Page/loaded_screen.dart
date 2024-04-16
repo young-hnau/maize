@@ -125,20 +125,22 @@ class _LoadedScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 20),
           ),
           const SizedBox(height: 10),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Card(
-              color: MealieColors.darkRed,
-              margin: const EdgeInsets.only(left: 15.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  recipe.recipeYield.toString(),
-                  style: const TextStyle(color: Colors.white),
+          recipe.recipeYield == null || recipe.recipeYield!.isEmpty
+              ? Container()
+              : Align(
+                  alignment: Alignment.centerLeft,
+                  child: Card(
+                    color: MealieColors.darkRed,
+                    margin: const EdgeInsets.only(left: 15.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        recipe.recipeYield.toString(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),

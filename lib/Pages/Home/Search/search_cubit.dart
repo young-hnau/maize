@@ -45,10 +45,10 @@ class SearchCubit extends Cubit<SearchState> {
           throw Exception("An unknown error occuried while getting recipes");
         }
 
-        if (recipes!.length < _pageSize) {
-          state.pagingController.appendLastPage(recipes!);
+        if (recipes.length < _pageSize) {
+          state.pagingController.appendLastPage(recipes);
         } else {
-          state.pagingController.appendPage(recipes!, pageKey + 1);
+          state.pagingController.appendPage(recipes, pageKey + 1);
         }
       });
     } on Exception catch (err) {
