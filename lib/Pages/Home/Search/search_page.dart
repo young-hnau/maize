@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,6 +11,7 @@ import 'package:mealie_mobile/Pages/Home/home_cubit.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_mobile/colors.dart';
 import 'package:mealie_repository/mealie_repository.dart';
+import 'package:async/async.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
@@ -236,7 +239,7 @@ class _StarRating extends StatelessWidget {
   }
 }
 
-class _SearchTextField extends StatelessWidget {
+class _SearchTextField extends StatefulWidget {
   const _SearchTextField({
     required this.searchCubit,
     required this.tfController,
@@ -246,28 +249,43 @@ class _SearchTextField extends StatelessWidget {
   final TextEditingController tfController;
 
   @override
+  State<StatefulWidget> createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<_SearchTextField> {
+  @override
   Widget build(BuildContext context) {
+    final RestartableTimer timer =
+        RestartableTimer(const Duration(seconds: 1), () {
+      if (widget.tfController.text.isNotEmpty) {
+        widget.searchCubit.searchRecipes(widget.tfController.value.text);
+      }
+    });
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         child: TextField(
-          controller: tfController,
+          controller: widget.tfController,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             hintText: "Search...",
             border: const OutlineInputBorder(),
             prefixIcon: const Icon(Icons.search),
-            suffixIcon: tfController.text.isNotEmpty
+            suffixIcon: widget.tfController.text.isNotEmpty
                 ? IconButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
-                      tfController.clear();
-                      searchCubit.searchRecipes('');
+                      widget.tfController.clear();
+                      widget.searchCubit.clearSearch();
                     },
                     icon: const Icon(Icons.clear))
                 : null,
           ),
-          onChanged: searchCubit.searchRecipes,
+          onChanged: (query) {
+            // Wait until 1 second has passed after final keypress before searching
+            timer.reset();
+            setState(() {});
+          },
         ),
       ),
     );
