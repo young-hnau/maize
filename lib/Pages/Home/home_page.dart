@@ -267,6 +267,9 @@ class _AppBar extends AppBar {
   Color? get backgroundColor => MealieColors.orange;
 
   @override
+  Color? get foregroundColor => Colors.white;
+
+  @override
   Widget? get title => Row(
         children: [
           InkWell(
