@@ -8,6 +8,7 @@ enum HomeStatus {
 
 class HomeState extends Equatable {
   const HomeState({
+    required this.context,
     required this.status,
     required this.onScreen,
     this.errorMessage,
@@ -16,16 +17,15 @@ class HomeState extends Equatable {
   final HomeStatus status;
   final String? errorMessage;
   final Widget onScreen;
+  final BuildContext context;
 
   HomeState copyWith({
     required HomeStatus status,
-    Uri? uri,
     String? errorMessage,
-    bool? showPassword,
-    bool? rememberMe,
     Widget? onScreen,
   }) {
     return HomeState(
+      context: context,
       status: status,
       errorMessage: errorMessage ?? this.errorMessage,
       onScreen: onScreen ?? this.onScreen,

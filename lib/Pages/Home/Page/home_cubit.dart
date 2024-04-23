@@ -1,14 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mealie_mobile/Pages/Home/Search/search_page.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({required this.appBloc})
-      : super(HomeState(status: HomeStatus.ready, onScreen: SearchPage())) {
+  HomeCubit({required this.appBloc, required BuildContext context})
+      : super(HomeState(
+            status: HomeStatus.ready,
+            context: context,
+            onScreen: SearchPage())) {
     _initialize();
   }
 

@@ -61,8 +61,7 @@ class _Drawer extends Drawer {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CreateButtonDropDown(),
-
+                        const CreateButtonDropDown(),
                         const SizedBox(height: 10),
                         _PageSelectionTile(
                           icon: Icons.search,

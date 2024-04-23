@@ -10,12 +10,10 @@ class DrawerState extends Equatable {
   const DrawerState({
     required this.status,
     this.errorMessage,
-    this.createOverlay,
   });
 
   final DrawerStatus status;
   final String? errorMessage;
-  final OverlayEntry? createOverlay;
 
   DrawerState copyWith({
     DrawerStatus? status,
@@ -25,7 +23,6 @@ class DrawerState extends Equatable {
     return DrawerState(
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
-      createOverlay: createOverlay ?? this.createOverlay,
     );
   }
 
@@ -33,6 +30,5 @@ class DrawerState extends Equatable {
   List<Object?> get props => [
         status,
         errorMessage,
-        createOverlay,
       ];
 }

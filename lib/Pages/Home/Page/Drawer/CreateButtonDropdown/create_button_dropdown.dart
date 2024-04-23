@@ -1,6 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mealie_mobile/Pages/Home/CreateCookbook/create_cookbook_page.dart';
+import 'package:mealie_mobile/Pages/Home/CreateRecipe/create_recipe_page.dart';
+import 'package:mealie_mobile/Pages/Home/ImportRecipe/import_recipe_page.dart';
+import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/colors.dart';
 
 abstract class MenuItems {
@@ -8,24 +13,27 @@ abstract class MenuItems {
     text: "Import",
     subtext: "Import a recipe by URL",
     icon: FontAwesomeIcons.link,
-    action: () {
-      debugPrint("Pressed Import");
+    action: (BuildContext context) {
+      context.read<HomeCubit>().setScreen(const ImportRecipePage());
+      Navigator.of(context.read<HomeCubit>().state.context).pop();
     },
   );
   static final create = MenuItem(
     text: "Create",
     subtext: "Create a recipe manually",
     icon: FontAwesomeIcons.penToSquare,
-    action: () {
-      debugPrint("Pressed Create");
+    action: (BuildContext context) {
+      context.read<HomeCubit>().setScreen(const CreateRecipePage());
+      Navigator.of(context.read<HomeCubit>().state.context).pop();
     },
   );
   static final cookbook = MenuItem(
     text: "Cookbook",
     subtext: "Create a new cookbook",
     icon: FontAwesomeIcons.book,
-    action: () {
-      debugPrint("Pressed Cookbook");
+    action: (BuildContext context) {
+      context.read<HomeCubit>().setScreen(const CreateCookbookPage());
+      Navigator.of(context.read<HomeCubit>().state.context).pop();
     },
   );
 
@@ -51,7 +59,8 @@ abstract class MenuItems {
     return menuItems;
   }
 
-  static void onChanged(BuildContext context, MenuItem item) => item.action();
+  static void onChanged(BuildContext context, MenuItem item) =>
+      item.action(context);
 }
 
 class CreateButtonDropDown extends StatelessWidget {
@@ -68,7 +77,7 @@ class CreateButtonDropDown extends StatelessWidget {
             elevation: 3,
             color: Colors.grey[200],
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25))),
+                borderRadius: BorderRadius.all(Radius.circular(50))),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -83,12 +92,12 @@ class CreateButtonDropDown extends StatelessWidget {
           ),
         ),
         items: MenuItems.dropDownMenuItems,
-        onChanged: (value) => MenuItems.onChanged(context, value!),
+        onChanged: (value) => MenuItems.onChanged(context, value! as MenuItem),
         dropdownStyleData: DropdownStyleData(
           width: MediaQuery.of(context).size.width * 0.7,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
           offset: const Offset(0, 0),
@@ -123,7 +132,7 @@ class MenuItem {
   final String text;
   final String subtext;
   final IconData icon;
-  final Function() action;
+  final Function(BuildContext) action;
 
   Widget get build {
     return Row(
@@ -141,11 +150,11 @@ class MenuItem {
             children: [
               Text(
                 text,
-                style: const TextStyle(color: Colors.black87, fontSize: 12),
+                style: const TextStyle(color: Colors.black87, fontSize: 14),
               ),
               Text(
                 subtext,
-                style: const TextStyle(color: Colors.black54, fontSize: 12),
+                style: const TextStyle(color: Colors.black54, fontSize: 14),
               ),
             ],
           ),

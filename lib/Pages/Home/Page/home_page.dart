@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mealie_mobile/Pages/Home/Categories/categories_page.dart';
 import 'package:mealie_mobile/Pages/Home/MealPlanner/meal_planner_page.dart';
-import 'package:mealie_mobile/Pages/Home/Page/Drawer/CreateDropdown/create_dropdown.dart';
+import 'package:mealie_mobile/Pages/Home/Page/Drawer/CreateButtonDropdown/create_button_dropdown.dart';
 import 'package:mealie_mobile/Pages/Home/Page/Drawer/drawer_cubit.dart';
 import 'package:mealie_mobile/Pages/Home/Search/search_page.dart';
 import 'package:mealie_mobile/Pages/Home/ShoppingLists/shopping_lists_page.dart';
@@ -25,7 +25,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(builder: (context, snapshot) {
       return BlocProvider(
-        create: (_) => HomeCubit(appBloc: context.read<AppBloc>()),
+        create: (_) =>
+            HomeCubit(appBloc: context.read<AppBloc>(), context: context),
         child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
           switch (state.status) {
             case HomeStatus.error:
