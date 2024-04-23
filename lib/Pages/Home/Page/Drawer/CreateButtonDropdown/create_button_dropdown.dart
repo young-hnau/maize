@@ -4,9 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mealie_mobile/colors.dart';
 
 abstract class MenuItems {
-  static final List<MenuItem> items = [import, create, cookbook];
-  static int get length => (items.length * 2) - 1;
-
   static final import = MenuItem(
     text: "Import",
     subtext: "Import a recipe by URL",
@@ -32,6 +29,9 @@ abstract class MenuItems {
     },
   );
 
+  static final List<MenuItem> items = [import, create, cookbook];
+  static int get length => (items.length * 2) - 1;
+
   static List<DropdownMenuItem> get dropDownMenuItems {
     List<DropdownMenuItem> menuItems = [];
     for (int index = 0; index < items.length; index++) {
@@ -54,8 +54,8 @@ abstract class MenuItems {
   static void onChanged(BuildContext context, MenuItem item) => item.action();
 }
 
-class CreateDropDown extends StatelessWidget {
-  const CreateDropDown({super.key});
+class CreateButtonDropDown extends StatelessWidget {
+  const CreateButtonDropDown({super.key});
 
   @override
   Widget build(BuildContext context) {
