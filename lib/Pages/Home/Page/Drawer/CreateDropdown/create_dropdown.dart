@@ -1,0 +1,156 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mealie_mobile/colors.dart';
+
+abstract class MenuItems {
+  static final List<MenuItem> items = [import, create, cookbook];
+  static int get length => (items.length * 2) - 1;
+
+  static final import = MenuItem(
+    text: "Import",
+    subtext: "Import a recipe by URL",
+    icon: FontAwesomeIcons.link,
+    action: () {
+      debugPrint("Pressed Import");
+    },
+  );
+  static final create = MenuItem(
+    text: "Create",
+    subtext: "Create a recipe manually",
+    icon: FontAwesomeIcons.penToSquare,
+    action: () {
+      debugPrint("Pressed Create");
+    },
+  );
+  static final cookbook = MenuItem(
+    text: "Cookbook",
+    subtext: "Create a new cookbook",
+    icon: FontAwesomeIcons.book,
+    action: () {
+      debugPrint("Pressed Cookbook");
+    },
+  );
+
+  static List<DropdownMenuItem> get dropDownMenuItems {
+    List<DropdownMenuItem> menuItems = [];
+    for (int index = 0; index < items.length; index++) {
+      MenuItem item = items[index];
+      menuItems.add(
+        DropdownMenuItem<MenuItem>(value: item, child: item.build),
+      );
+      if (index < items.length - 1) {
+        menuItems.add(
+          const DropdownMenuItem<Divider>(
+            enabled: false,
+            child: Divider(),
+          ),
+        );
+      }
+    }
+    return menuItems;
+  }
+
+  static void onChanged(BuildContext context, MenuItem item) => item.action();
+}
+
+class CreateDropDown extends StatelessWidget {
+  const CreateDropDown({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        customButton: SizedBox(
+          height: 50,
+          width: 125,
+          child: Card(
+            elevation: 3,
+            color: Colors.grey[200],
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25))),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(
+                  Icons.add,
+                  color: MealieColors.orange,
+                  size: 30,
+                ),
+                Text("Create")
+              ],
+            ),
+          ),
+        ),
+        items: MenuItems.dropDownMenuItems,
+        onChanged: (value) => MenuItems.onChanged(context, value!),
+        dropdownStyleData: DropdownStyleData(
+          width: MediaQuery.of(context).size.width * 0.7,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.white,
+          ),
+          offset: const Offset(0, 0),
+        ),
+        menuItemStyleData: MenuItemStyleData(
+          customHeights: [
+            ...List<double>.generate(MenuItems.length, (index) {
+              if (index % 2 == 0) {
+                return 48;
+              }
+              return 18;
+            }),
+          ],
+          padding: const EdgeInsets.only(left: 16, right: 16),
+        ),
+        buttonStyleData: ButtonStyleData(
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+        ),
+      ),
+    );
+  }
+}
+
+class MenuItem {
+  const MenuItem({
+    required this.text,
+    required this.subtext,
+    required this.icon,
+    required this.action,
+  });
+
+  final String text;
+  final String subtext;
+  final IconData icon;
+  final Function() action;
+
+  Widget get build {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: Colors.black54,
+          size: 24,
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: const TextStyle(color: Colors.black87, fontSize: 12),
+              ),
+              Text(
+                subtext,
+                style: const TextStyle(color: Colors.black54, fontSize: 12),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}

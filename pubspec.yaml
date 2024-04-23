@@ -32,6 +32,7 @@ dependencies:
   bloc: ^8.1.2
   cached_network_image: ^3.2.3
   cupertino_icons: ^1.0.2
+  dropdown_button2: ^2.3.9
   equatable: ^2.0.5
   flow_builder: ^0.0.9
   flutter:
@@ -45,10 +46,10 @@ dependencies:
   shared_preferences: ^2.2.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
   ios: true
