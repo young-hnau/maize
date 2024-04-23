@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mealie_mobile/Pages/Loading/loading_page.dart';
 import 'package:mealie_mobile/Pages/Authentication/authentication_page.dart';
-import 'package:mealie_mobile/Pages/Home/home_page.dart';
+import 'package:mealie_mobile/Pages/Home/Page/home_page.dart';
 import 'package:mealie_mobile/Pages/ProvideURI/provide_uri_page.dart';
 import 'app_bloc.dart';
 

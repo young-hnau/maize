@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mealie_mobile/Pages/Home/Search/Recipe/Page/recipe_page.dart';
 import 'package:mealie_mobile/Pages/Home/Search/search_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/home_cubit.dart';
+import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_mobile/colors.dart';
 import 'package:mealie_repository/mealie_repository.dart';

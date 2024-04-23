@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mealie_mobile/Pages/Home/ShoppingLists/ShoppingList/shopping_list_page.dart';
 import 'package:mealie_mobile/Pages/Home/ShoppingLists/shopping_lists_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/home_cubit.dart';
+import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_mobile/colors.dart';
 import 'package:mealie_repository/mealie_repository.dart';
