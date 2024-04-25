@@ -3,23 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mealie_mobile/Pages/Home/CreateCookbook/create_cookbook_page.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/create_recipe_page.dart';
+import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/create_recipe_page.dart';
 import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/colors.dart';
 
 abstract class MenuItems {
-  static final import = MenuItem(
-    text: "Import",
-    subtext: "Import a recipe by URL",
-    icon: FontAwesomeIcons.link,
-    action: (BuildContext context) {
-      context.read<HomeCubit>().setScreen(const CreateRecipePage());
-      Navigator.of(context.read<HomeCubit>().state.context).pop();
-    },
-  );
   static final create = MenuItem(
-    text: "Create",
-    subtext: "Create a recipe manually",
+    text: "Recipe",
+    subtext: "Create a new recipe",
     icon: FontAwesomeIcons.penToSquare,
     action: (BuildContext context) {
       context.read<HomeCubit>().setScreen(const CreateRecipePage());
@@ -36,7 +27,7 @@ abstract class MenuItems {
     },
   );
 
-  static final List<MenuItem> items = [import, create, cookbook];
+  static final List<MenuItem> items = [create, cookbook];
   static int get length => (items.length * 2) - 1;
 
   static List<DropdownMenuItem> get dropDownMenuItems {
