@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ImportRecipePage extends StatelessWidget {
-  const ImportRecipePage({super.key});
+class DebugScraper extends StatelessWidget {
+  const DebugScraper({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Import Recipe Page"),
+        child: Text("Create Recipe Page"),
       ),
     );
   }

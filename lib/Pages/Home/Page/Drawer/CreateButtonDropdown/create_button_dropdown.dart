@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mealie_mobile/Pages/Home/CreateCookbook/create_cookbook_page.dart';
 import 'package:mealie_mobile/Pages/Home/CreateRecipe/create_recipe_page.dart';
-import 'package:mealie_mobile/Pages/Home/ImportRecipe/import_recipe_page.dart';
 import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/colors.dart';
 
@@ -14,7 +13,7 @@ abstract class MenuItems {
     subtext: "Import a recipe by URL",
     icon: FontAwesomeIcons.link,
     action: (BuildContext context) {
-      context.read<HomeCubit>().setScreen(const ImportRecipePage());
+      context.read<HomeCubit>().setScreen(const CreateRecipePage());
       Navigator.of(context.read<HomeCubit>().state.context).pop();
     },
   );
