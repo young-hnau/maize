@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DebugScraper extends StatelessWidget {
-  const DebugScraper({super.key});
+class DebugScraperWidget extends StatelessWidget {
+  const DebugScraperWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

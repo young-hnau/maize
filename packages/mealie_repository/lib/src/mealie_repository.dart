@@ -201,7 +201,7 @@ class MealieRepository {
     try {
       final Response response = await dio.getUri(uri, options: options);
       user = User.fromMealieResponse(
-          data: response.data, refreshToken: refreshToken!);
+          data: response.data, refreshToken: refreshToken);
     } on DioException catch (err) {
       if (err.response != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
@@ -481,6 +481,34 @@ class MealieRepository {
 
   //   return responseData;
   // }
+
+  /// Takes in a URL and attempts to scrape data and load it into the database
+  ///
+  /// Return:
+  /// - String? Recipe Slug
+  Future<String?> parseRecipeURL(String url, bool includeTags) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/recipes/create-url');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    try {
+      Response response = await dio.postUri(uri,
+          options: options, data: {'includeTags': includeTags, 'url': url});
+      return response.data;
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return null;
+  }
 }
 
 enum ImageType {

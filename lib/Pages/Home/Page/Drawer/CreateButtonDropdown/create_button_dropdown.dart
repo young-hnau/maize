@@ -13,7 +13,9 @@ abstract class MenuItems {
     subtext: "Create a new recipe",
     icon: FontAwesomeIcons.penToSquare,
     action: (BuildContext context) {
-      context.read<HomeCubit>().setScreen(const CreateRecipePage());
+      context.read<HomeCubit>().setScreen(CreateRecipePage(
+            homeCubit: context.read<HomeCubit>(),
+          ));
       Navigator.of(context.read<HomeCubit>().state.context).pop();
     },
   );
