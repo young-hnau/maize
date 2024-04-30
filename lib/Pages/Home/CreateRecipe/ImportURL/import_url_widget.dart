@@ -8,20 +8,13 @@ import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_mobile/colors.dart';
 
 class ImportURLWidget extends StatelessWidget {
-  const ImportURLWidget({
-    super.key,
-    required this.appBloc,
-    required this.homeCubit,
-  });
-
-  final AppBloc appBloc;
-  final HomeCubit homeCubit;
+  const ImportURLWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ImportURLCubit(
-        appBloc: appBloc,
+        appBloc: context.read<AppBloc>(),
         homeCubit: context.read<HomeCubit>(),
       ),
       child: BlocBuilder<ImportURLCubit, ImportURLState>(

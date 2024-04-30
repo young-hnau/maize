@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/DropDownButton/drop_down_widget.dart';
 import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/create_recipe_cubit.dart';
 import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/colors.dart';
 
 class CreateRecipePage extends StatelessWidget {
   const CreateRecipePage({
@@ -52,36 +51,9 @@ class CreateRecipePage extends StatelessWidget {
                               style: TextStyle(fontSize: 16),
                             ),
                             const SizedBox(height: 10),
-                            Align(
+                            const Align(
                               alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: MealieColors.orange,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "Import From Url",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      SizedBox(width: 8),
-                                      Icon(
-                                        FontAwesomeIcons.angleDown,
-                                        size: 12,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              child: ImportTypeDropDown(),
                             ),
                             const SizedBox(height: 5),
                             const Divider(),

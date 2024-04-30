@@ -10,12 +10,9 @@ part 'create_recipe_state.dart';
 class CreateRecipeCubit extends Cubit<CreateRecipeState> {
   CreateRecipeCubit({required this.appBloc, required this.homeCubit})
       : super(
-          CreateRecipeState(
+          const CreateRecipeState(
             status: CreateRecipeStatus.ready,
-            onScreen: ImportURLWidget(
-              appBloc: appBloc,
-              homeCubit: homeCubit,
-            ),
+            onScreen: ImportURLWidget(),
           ),
         ) {
     _initialize();
@@ -25,4 +22,8 @@ class CreateRecipeCubit extends Cubit<CreateRecipeState> {
   final HomeCubit homeCubit;
 
   Future<void> _initialize() async {}
+
+  void setWidget(Widget screen) {
+    emit(state.copyWith(onScreen: screen));
+  }
 }

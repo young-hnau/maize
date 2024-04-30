@@ -5,10 +5,8 @@ class BulkURLImportWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Create Recipe Page"),
-      ),
+    return const Center(
+      child: Text("Bulk URL Import"),
     );
   }
 }
