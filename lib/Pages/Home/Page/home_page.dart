@@ -87,7 +87,9 @@ class _AppBar extends AppBar {
 
   @override
   List<Widget>? get actions => [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        IconButton(
+            onPressed: () => homeCubit.setScreen(SearchPage()),
+            icon: const Icon(Icons.search)),
         IconButton(
           onPressed: () => appBloc.add(AppLogoutRequested()),
           icon: const Icon(Icons.logout),
