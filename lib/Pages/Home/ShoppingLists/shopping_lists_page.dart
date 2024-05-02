@@ -110,11 +110,12 @@ class _LoadedScreen extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8))),
               child: InkWell(
                 onTap: () {
-                  const SnackBar snackBar = SnackBar(
-                    content: Text('This feature has not yet been implemented.'),
-                  );
+                  context.read<ShoppingListsCubit>().createOverlay(context);
+                  // const SnackBar snackBar = SnackBar(
+                  //   content: Text('This feature has not yet been implemented.'),
+                  // );
 
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,20 +141,23 @@ class _LoadedScreen extends StatelessWidget {
               itemCount: shoppingLists.length,
               itemBuilder: (context, index) {
                 ShoppingList shoppingList = shoppingLists[index];
-                return _ShoppingListTile(
-                  shoppingList: shoppingList,
-                  onTap: () {
-                    context.read<HomeCubit>().setScreen(
-                        ShoppingListPage(shoppingList: shoppingList));
-                  },
-                  onDelete: () {
-                    const snackBar = SnackBar(
-                      content: Text(
-                          'This functionality has not been implemented yet.'),
-                    );
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: _ShoppingListTile(
+                    shoppingList: shoppingList,
+                    onTap: () {
+                      context.read<HomeCubit>().setScreen(
+                          ShoppingListPage(shoppingList: shoppingList));
+                    },
+                    onDelete: () {
+                      const snackBar = SnackBar(
+                        content: Text(
+                            'This functionality has not been implemented yet.'),
+                      );
 
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  ),
                 );
               },
             ),

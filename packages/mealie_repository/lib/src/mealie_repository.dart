@@ -263,6 +263,33 @@ class MealieRepository {
     return shoppingList;
   }
 
+  Future<ShoppingList?> createOneShoppingList({required String name}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/groups/shopping/lists');
+    final Options options =
+        Options(headers: {'Authorization': 'Bearer $refreshToken'});
+    ShoppingList? shoppingList;
+    Map<String, dynamic> data = {
+      'name': name,
+    };
+
+    try {
+      final Response response =
+          await dio.postUri(uri, options: options, data: data);
+      shoppingList = ShoppingList.fromdata(data: response.data);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+
+    return shoppingList;
+  }
+
   Future<void> updateOneShoppingListItem(
       {required ShoppingListItem item}) async {
     final String? refreshToken =
@@ -495,10 +522,10 @@ class MealieRepository {
       headers: {'Authorization': 'Bearer $refreshToken'},
       contentType: 'application/json',
     );
+    final Map<String, dynamic> data = {'includeTags': includeTags, 'url': url};
 
     try {
-      Response response = await dio.postUri(uri,
-          options: options, data: {'includeTags': includeTags, 'url': url});
+      Response response = await dio.postUri(uri, options: options, data: data);
       return response.data;
     } on DioException catch (err) {
       if (err.response != null) {
@@ -523,10 +550,10 @@ class MealieRepository {
       headers: {'Authorization': 'Bearer $refreshToken'},
       contentType: 'application/json',
     );
+    final Map<String, dynamic> data = {'name': name};
 
     try {
-      Response response =
-          await dio.postUri(uri, options: options, data: {'name': name});
+      Response response = await dio.postUri(uri, options: options, data: data);
       return response.data;
     } on DioException catch (err) {
       if (err.response != null) {

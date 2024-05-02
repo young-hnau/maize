@@ -162,6 +162,7 @@ class ShoppingList extends Equatable {
     this.updateAt,
     required this.groupId,
     required this.id,
+    required this.userId,
     this.items,
     required this.recipeReferences,
     required this.labelSettings,
@@ -173,6 +174,7 @@ class ShoppingList extends Equatable {
   final String? updateAt;
   final String groupId;
   final String id;
+  final String userId;
   final List<ShoppingListItem>? items;
   final List<RecipeReference> recipeReferences;
   final List<LabelSetting> labelSettings;
@@ -185,6 +187,7 @@ class ShoppingList extends Equatable {
     if (this.updateAt != null) json['updateAt'] = this.updateAt;
     json['groupId'] = this.groupId;
     json['id'] = this.id;
+    json['userId'] = this.userId;
     json['items'] =
         items?.map((ShoppingListItem item) => item.toJson()).toList();
     return json;
@@ -205,6 +208,7 @@ class ShoppingList extends Equatable {
       updateAt: updateAt ?? this.updateAt,
       groupId: groupId,
       id: id,
+      userId: userId,
       items: items ?? this.items,
       recipeReferences: recipeReferences ?? this.recipeReferences,
       labelSettings: labelSettings ?? this.labelSettings,
@@ -238,6 +242,7 @@ class ShoppingList extends Equatable {
       createdAt: data['createdAt'],
       updateAt: data['updateAt'],
       groupId: data['groupId'],
+      userId: data['userId'],
       id: data['id'],
       items: items,
       recipeReferences: recipeReferences,
@@ -249,6 +254,7 @@ class ShoppingList extends Equatable {
     name: '',
     groupId: '',
     id: '',
+    userId: '',
     recipeReferences: const [],
     labelSettings: const [],
   );
@@ -260,6 +266,7 @@ class ShoppingList extends Equatable {
         this.createdAt,
         this.updateAt,
         this.groupId,
+        this.userId,
         this.id,
         this.items,
         this.recipeReferences,

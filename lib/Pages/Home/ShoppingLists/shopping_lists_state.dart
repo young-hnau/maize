@@ -8,17 +8,18 @@ enum ShoppingListsStatus {
 }
 
 class ShoppingListsState extends Equatable {
-  const ShoppingListsState({
-    required this.status,
-    this.uri,
-    this.errorMessage,
-    this.shoppingLists,
-  });
+  const ShoppingListsState(
+      {required this.status,
+      this.uri,
+      this.errorMessage,
+      this.shoppingLists,
+      this.overlayEntry});
 
   final ShoppingListsStatus status;
   final Uri? uri;
   final String? errorMessage;
   final List<ShoppingList>? shoppingLists;
+  final OverlayEntry? overlayEntry;
 
   ShoppingListsState copyWith({
     required ShoppingListsStatus status,
@@ -27,12 +28,14 @@ class ShoppingListsState extends Equatable {
     bool? showPassword,
     bool? rememberMe,
     List<ShoppingList>? shoppingLists,
+    OverlayEntry? overlayEntry,
   }) {
     return ShoppingListsState(
       status: status,
       uri: uri ?? this.uri,
       errorMessage: errorMessage ?? this.errorMessage,
       shoppingLists: shoppingLists ?? this.shoppingLists,
+      overlayEntry: overlayEntry ?? this.overlayEntry,
     );
   }
 
@@ -42,5 +45,6 @@ class ShoppingListsState extends Equatable {
         uri,
         errorMessage,
         shoppingLists,
+        overlayEntry,
       ];
 }
