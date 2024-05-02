@@ -1,13 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
+import 'package:mealie_mobile/Pages/Home/Search/search_page.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_repository/mealie_repository.dart';
 
 part 'recipe_state.dart';
 
 class RecipeCubit extends Cubit<RecipeState> {
-  RecipeCubit({required this.appBloc, required Recipe recipe, bool? isEditing})
+  RecipeCubit(
+      {required this.appBloc,
+      required this.homeCubit,
+      required Recipe recipe,
+      bool? isEditing})
       : super(const RecipeState(
           status: RecipeStatus.ready,
         )) {
@@ -15,6 +21,7 @@ class RecipeCubit extends Cubit<RecipeState> {
   }
 
   final AppBloc appBloc;
+  final HomeCubit homeCubit;
 
   Future<void> _initialize({Recipe? recipe, bool? isEditing}) async {
     emit(state.copyWith(status: RecipeStatus.loading, recipe: recipe));
@@ -115,6 +122,11 @@ class RecipeCubit extends Cubit<RecipeState> {
     );
 
     emit(state.copyWith(editingRecipe: recipe));
+  }
+
+  Future<void> deleteRecipe() async {
+    await appBloc.repo.deleteRecipe(state.recipe!.slug!);
+    homeCubit.setScreen(SearchPage());
   }
 
   void updateIngredientNote(int index, String newValue) {

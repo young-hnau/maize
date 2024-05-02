@@ -139,8 +139,15 @@ class _EditingButtons extends StatelessWidget {
       children: [
         _RoundedIconButton(
           onTap: () {
-            const SnackBar snackBar = SnackBar(
-              content: Text('This feature has not yet been implemented.'),
+            SnackBar snackBar = SnackBar(
+              content:
+                  const Text('Are you sure you want to delete this recipe?'),
+              action: SnackBarAction(
+                label: "Yes",
+                onPressed: () {
+                  recipeCubit.deleteRecipe();
+                },
+              ),
             );
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -166,7 +173,7 @@ class _EditingButtons extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         _RoundedIconButton(
-          onTap: () => recipeCubit.endEditing(),
+          onTap: recipeCubit.endEditing,
           color: Colors.white,
           iconColor: Colors.black,
           iconSize: 20,
