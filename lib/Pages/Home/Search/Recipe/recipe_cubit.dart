@@ -24,19 +24,21 @@ class RecipeCubit extends Cubit<RecipeState> {
   final HomeCubit homeCubit;
 
   Future<void> _initialize({Recipe? recipe, bool? isEditing}) async {
-    emit(state.copyWith(status: RecipeStatus.loading, recipe: recipe));
-    getRecipe().then((value) {
-      if (isEditing == true) {
-        beginEditing();
-      }
-    });
+    emit(state.copyWith(
+      recipe: recipe,
+      editingRecipe: recipe,
+    ));
+    await getRecipe();
+    if (isEditing == true) {
+      beginEditing();
+    }
   }
 
   Future<void> getRecipe({int pageKey = 1, String? search}) async {
+    emit(state.copyWith(status: RecipeStatus.loading));
     try {
       Recipe? recipe;
       if (state.recipe?.slug != null) {
-        emit(state.copyWith(status: RecipeStatus.loading));
         recipe = await appBloc.repo.getRecipe(slug: state.recipe!.id);
 
         if (recipe == null) {
