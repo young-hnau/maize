@@ -12,7 +12,7 @@ class LabelSetting extends Equatable {
   final String labelId;
   final int position;
   final String id;
-  final Label label;
+  final Label? label;
 
   static LabelSetting? fromData({Map<String, dynamic>? data}) {
     if (data == null) return null;
@@ -21,7 +21,7 @@ class LabelSetting extends Equatable {
       labelId: data['labelId'],
       position: data['position'],
       id: data['id'],
-      label: data['label'],
+      label: Label.fromData(data: data['label']),
     );
   }
 

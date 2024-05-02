@@ -228,7 +228,8 @@ class ShoppingList extends Equatable {
             const []);
 
     List<LabelSetting> labelSettings = List<LabelSetting>.from(
-        data['labelSettings']?.map((dynamic labelSetting) => LabelSetting) ??
+        data['labelSettings']?.map((dynamic labelSetting) =>
+                LabelSetting.fromData(data: labelSetting)) ??
             const []);
 
     return ShoppingList(

@@ -20,6 +20,7 @@ class CreateShoppingItemCubit extends Cubit<CreateShoppingItemState> {
       required ShoppingListCubit shoppingListCubit}) async {
     await appBloc.repo.createOneShoppingListItem(item: item);
     shoppingListCubit.removeOverlay();
+    shoppingListCubit.getShoppingList();
   }
 
   void resetCard() {
