@@ -15,15 +15,19 @@ part 'error_screen.dart';
 part 'star_rating.dart';
 
 class RecipePage extends StatelessWidget {
-  const RecipePage({super.key, required this.recipe});
+  const RecipePage({super.key, required this.recipe, this.isEditing});
   final Recipe recipe;
+  final bool? isEditing;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
       return BlocProvider(
-        create: (_) =>
-            RecipeCubit(appBloc: context.read<AppBloc>(), recipe: recipe),
+        create: (_) => RecipeCubit(
+          appBloc: context.read<AppBloc>(),
+          recipe: recipe,
+          isEditing: isEditing,
+        ),
         child: BlocBuilder<RecipeCubit, RecipeState>(
           buildWhen: (previous, current) {
             if (previous.recipe != current.recipe) {

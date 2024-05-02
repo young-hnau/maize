@@ -33,37 +33,6 @@ class _EditingScreen extends StatelessWidget {
       builder: (context, snapshot) {
         RecipeCubit recipeCubit = context.read<RecipeCubit>();
 
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.name != null) {
-        //   recipeNameTFController.text = recipeCubit.state.recipe!.name!;
-        // }
-
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.recipeYield != null) {
-        //   recipeYieldTFController.text = recipeCubit.state.recipe!.recipeYield!;
-        // }
-
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.totalTime != null) {
-        //   totalTimeTFController.text = recipeCubit.state.recipe!.totalTime!;
-        // }
-
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.prepTime != null) {
-        //   prepTimeTFController.text = recipeCubit.state.recipe!.prepTime!;
-        // }
-
-        // // NOTE: Unsure why, but the API seems to be using prepTime when the UI referes to "Cook Time"
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.performTime != null) {
-        //   cookTimeTFController.text = recipeCubit.state.recipe!.performTime!;
-        // }
-
-        // if (recipeCubit.state.recipe != null &&
-        //     recipeCubit.state.recipe?.description != null) {
-        //   descriptionTFController.text = recipeCubit.state.recipe!.description!;
-        // }
-
         return ListView(
           shrinkWrap: true,
           children: [

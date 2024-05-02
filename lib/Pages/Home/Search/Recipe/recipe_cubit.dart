@@ -7,12 +7,16 @@ import 'package:mealie_repository/mealie_repository.dart';
 part 'recipe_state.dart';
 
 class RecipeCubit extends Cubit<RecipeState> {
-  RecipeCubit({required this.appBloc, required Recipe recipe})
+  RecipeCubit({required this.appBloc, required Recipe recipe, bool? isEditing})
       : _recipe = recipe,
         super(const RecipeState(
           status: RecipeStatus.ready,
         )) {
-    getRecipe();
+    getRecipe().then((value) {
+      if (isEditing == true) {
+        beginEditing();
+      }
+    });
   }
 
   final AppBloc appBloc;
