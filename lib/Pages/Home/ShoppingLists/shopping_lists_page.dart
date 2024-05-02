@@ -87,7 +87,7 @@ class _LoadedScreen extends StatelessWidget {
     List<ShoppingList> shoppingLists =
         context.read<ShoppingListsCubit>().state.shoppingLists ?? [];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 24),
       child: Column(
         children: [
           SizedBox(
@@ -109,14 +109,8 @@ class _LoadedScreen extends StatelessWidget {
                   color: MealieColors.green,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
               child: InkWell(
-                onTap: () {
-                  context.read<ShoppingListsCubit>().createOverlay(context);
-                  // const SnackBar snackBar = SnackBar(
-                  //   content: Text('This feature has not yet been implemented.'),
-                  // );
-
-                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                },
+                onTap: () =>
+                    context.read<ShoppingListsCubit>().createOverlay(context),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -134,8 +128,7 @@ class _LoadedScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            height: 400,
+          Expanded(
             child: ListView.builder(
               physics: const ClampingScrollPhysics(),
               itemCount: shoppingLists.length,
