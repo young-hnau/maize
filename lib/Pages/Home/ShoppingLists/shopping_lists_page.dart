@@ -150,9 +150,15 @@ class _LoadedScreen extends StatelessWidget {
                           ShoppingListPage(shoppingList: shoppingList));
                     },
                     onDelete: () {
-                      const snackBar = SnackBar(
-                        content: Text(
-                            'This functionality has not been implemented yet.'),
+                      SnackBar snackBar = SnackBar(
+                        content: const Text(
+                            'Are you sure you want to delete this shopping list?'),
+                        action: SnackBarAction(
+                          label: "Yes",
+                          onPressed: () => context
+                              .read<ShoppingListsCubit>()
+                              .deleteShoppingList(shoppingList.id),
+                        ),
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);

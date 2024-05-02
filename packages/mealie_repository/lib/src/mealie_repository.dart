@@ -290,6 +290,27 @@ class MealieRepository {
     return shoppingList;
   }
 
+  Future<void> deleteOneShoppingList({required String id}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/groups/shopping/lists/$id');
+    final Options options =
+        Options(headers: {'Authorization': 'Bearer $refreshToken'});
+
+    try {
+      await dio.deleteUri(uri, options: options);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+
+    return;
+  }
+
   Future<void> updateOneShoppingListItem(
       {required ShoppingListItem item}) async {
     final String? refreshToken =

@@ -41,4 +41,10 @@ class ShoppingListsCubit extends Cubit<ShoppingListsState> {
 
     emit(state.copyWith(status: state.status, overlayEntry: overlayEntry));
   }
+
+  Future<void> deleteShoppingList(String id) async {
+    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    await appBloc.repo.deleteOneShoppingList(id: id);
+    getShoppingLists();
+  }
 }
