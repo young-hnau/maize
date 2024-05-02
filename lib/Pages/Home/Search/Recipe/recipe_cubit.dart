@@ -8,10 +8,16 @@ part 'recipe_state.dart';
 
 class RecipeCubit extends Cubit<RecipeState> {
   RecipeCubit({required this.appBloc, required Recipe recipe, bool? isEditing})
-      : _recipe = recipe,
-        super(const RecipeState(
+      : super(const RecipeState(
           status: RecipeStatus.ready,
         )) {
+    _initialize(recipe: recipe, isEditing: isEditing);
+  }
+
+  final AppBloc appBloc;
+
+  Future<void> _initialize({Recipe? recipe, bool? isEditing}) async {
+    emit(state.copyWith(status: RecipeStatus.loading, recipe: recipe));
     getRecipe().then((value) {
       if (isEditing == true) {
         beginEditing();
@@ -19,15 +25,12 @@ class RecipeCubit extends Cubit<RecipeState> {
     });
   }
 
-  final AppBloc appBloc;
-  final Recipe _recipe;
-
   Future<void> getRecipe({int pageKey = 1, String? search}) async {
     try {
       Recipe? recipe;
-      if (_recipe.slug != null) {
+      if (state.recipe?.slug != null) {
         emit(state.copyWith(status: RecipeStatus.loading));
-        recipe = await appBloc.repo.getRecipe(slug: _recipe.slug!);
+        recipe = await appBloc.repo.getRecipe(slug: state.recipe!.id);
 
         if (recipe == null) {
           throw Exception("An unknown error occuried while getting recipes");
@@ -35,12 +38,14 @@ class RecipeCubit extends Cubit<RecipeState> {
       }
       emit(state.copyWith(
         status: RecipeStatus.loaded,
-        recipe: recipe ?? _recipe,
-        editingRecipe: recipe ?? _recipe,
+        recipe: recipe ?? state.recipe,
+        editingRecipe: recipe ?? state.recipe,
       ));
     } on Exception catch (err) {
       emit(state.copyWith(
-          status: RecipeStatus.error, errorMessage: err.toString()));
+        status: RecipeStatus.error,
+        errorMessage: err.toString(),
+      ));
     }
   }
 
