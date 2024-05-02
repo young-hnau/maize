@@ -509,6 +509,34 @@ class MealieRepository {
     }
     return null;
   }
+
+  /// Takes in a name and creates a new recipe entry in the database
+  ///
+  /// Return:
+  /// - String? Recipe Slug
+  Future<String?> createRecipe(String name) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/recipes');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    try {
+      Response response =
+          await dio.postUri(uri, options: options, data: {'name': name});
+      return response.data;
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return null;
+  }
 }
 
 enum ImageType {

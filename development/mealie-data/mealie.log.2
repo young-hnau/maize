@@ -1,140 +1,78 @@
-[INFO|server|L82] 2024-04-30T14:15:18: Started server process [1]
-[INFO|on|L48] 2024-04-30T14:15:18: Waiting for application startup.
-[INFO|app|L57] 2024-04-30T14:15:18: start: database initialization
-[INFO|init_db|L80] 2024-04-30T14:15:18: Database connection established.
-[INFO|migration|L216] 2024-04-30T14:15:18: Context impl SQLiteImpl.
-[INFO|migration|L219] 2024-04-30T14:15:18: Will assume non-transactional DDL.
-[INFO|init_db|L100] 2024-04-30T14:15:18: Migration needed. Performing migration...
-[INFO|migration|L216] 2024-04-30T14:15:18: Context impl SQLiteImpl.
-[INFO|migration|L219] 2024-04-30T14:15:18: Will assume non-transactional DDL.
-[INFO|migration|L622] 2024-04-30T14:15:18: Running upgrade  -> 6b0f5f32d602, Initial tables
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 6b0f5f32d602 -> 263dd6707191, convert quantity from integer to float
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 263dd6707191 -> f1a2dbee5fe9, Add original_text column to recipes_ingredients
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade f1a2dbee5fe9 -> 59eb59135381, add tags to cookbooks
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 59eb59135381 -> 09dfc897ad62, add require_all for cookbook filters
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 09dfc897ad62 -> ab0bae02578f, Add use_abbreviation column to ingredients
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade ab0bae02578f -> f30cf048c228, add new webhook fields
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade f30cf048c228 -> 188374910655, add login_attemps and locked_at field to user table
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 188374910655 -> 089bfa50d0ed, Add is_ocr_recipe column to recipes
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 089bfa50d0ed -> 44e8d670719d, add extras to shopping lists, list items, and ingredient foods
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 44e8d670719d -> 2ea7a807915c, add recipe_timeline_events table
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 2ea7a807915c -> 1923519381ad, added recipe last made timestamp
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 1923519381ad -> 167eb69066ad, add recipe_scale to shopping list item ref
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 167eb69066ad -> 165d943c64ee, add related user to mealplan
-[INFO|migration|L622] 2024-04-30T14:15:19: Running upgrade 165d943c64ee -> ff5f73b01a7a, add missing foreign key and order indices
-[INFO|migration|L622] 2024-04-30T14:15:20: Running upgrade ff5f73b01a7a -> 16160bf731a0, add more indices necessary for search
-[INFO|migration|L622] 2024-04-30T14:15:20: Running upgrade 16160bf731a0 -> 5ab195a474eb, add normalized search properties
-[INFO|migration|L622] 2024-04-30T14:15:20: Running upgrade 5ab195a474eb -> b04a08da2108, added shopping list label settings
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade b04a08da2108 -> 38514b39a824, add auth_method to user table
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade 38514b39a824 -> b3dbb554ba53, postgres fuzzy search
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade b3dbb554ba53 -> 04ac51cbe9a4, added group slug
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade 04ac51cbe9a4 -> 1825b5225403, added recipe note to shopping list recipe ref
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade 1825b5225403 -> bcfdad6b7355, remove tool name and slug unique contraints
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade bcfdad6b7355 -> 0341b154f79a, added normalized unit and food names
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade 0341b154f79a -> dded3119c1fe, added unique constraints
-[INFO|migration|L622] 2024-04-30T14:15:21: Running upgrade dded3119c1fe -> ba1e4a6cfe99, added plural names and alias tables for foods and units
-[INFO|migration|L622] 2024-04-30T14:15:22: Running upgrade ba1e4a6cfe99 -> 2298bb460ffd, added user to shopping list
-[INFO|migration|L622] 2024-04-30T14:15:22: Running upgrade 2298bb460ffd -> 09aba125b57a, add OIDC auth method
-[INFO|migration|L622] 2024-04-30T14:15:22: Running upgrade 09aba125b57a -> d7c6efd2de42, migrate favorites and ratings to user_ratings
-[INFO|fix_migration_data|L146] 2024-04-30T14:15:22: Checking for migration data fixes
-[INFO|init_db|L114] 2024-04-30T14:15:22: Database contains no users, initializing...
-[INFO|init_db|L36] 2024-04-30T14:15:22: Generating Default Group
-[INFO|init_users|L57] 2024-04-30T14:15:22: Generating Default User
-[INFO|app|L61] 2024-04-30T14:15:22: end: database initialization
-[INFO|app|L65] 2024-04-30T14:15:22: -----SYSTEM STARTUP-----
-[INFO|app|L66] 2024-04-30T14:15:22: ------APP SETTINGS------
-[INFO|app|L67] 2024-04-30T14:15:22: {
-    "theme": {
-        "light_primary": "#E58325",
-        "light_accent": "#007A99",
-        "light_secondary": "#973542",
-        "light_success": "#43A047",
-        "light_info": "#1976D2",
-        "light_warning": "#FF6D00",
-        "light_error": "#EF5350",
-        "dark_primary": "#E58325",
-        "dark_accent": "#007A99",
-        "dark_secondary": "#973542",
-        "dark_success": "#43A047",
-        "dark_info": "#1976D2",
-        "dark_warning": "#FF6D00",
-        "dark_error": "#EF5350"
-    },
-    "PRODUCTION": true,
-    "BASE_URL": "http://localhost:8080",
-    "STATIC_FILES": "/spa/static",
-    "IS_DEMO": false,
-    "HOST_IP": "*",
-    "API_HOST": "0.0.0.0",
-    "API_PORT": 9000,
-    "API_DOCS": true,
-    "TOKEN_TIME": 48,
-    "LOG_CONFIG_OVERRIDE": null,
-    "LOG_LEVEL": "info",
-    "GIT_COMMIT_HASH": "faf716cb7e60b9e31451bdc1caec88e8a78f4db7",
-    "ALLOW_SIGNUP": true,
-    "SECURITY_MAX_LOGIN_ATTEMPTS": 5,
-    "SECURITY_USER_LOCKOUT_TIME": 24,
-    "DB_ENGINE": "sqlite",
-    "DEFAULT_GROUP": "Home",
-    "SMTP_HOST": null,
-    "SMTP_PORT": "587",
-    "SMTP_FROM_NAME": "Mealie",
-    "SMTP_FROM_EMAIL": null,
-    "SMTP_AUTH_STRATEGY": "TLS",
-    "LDAP_AUTH_ENABLED": false,
-    "LDAP_SERVER_URL": null,
-    "LDAP_TLS_INSECURE": false,
-    "LDAP_TLS_CACERTFILE": null,
-    "LDAP_ENABLE_STARTTLS": false,
-    "LDAP_BASE_DN": null,
-    "LDAP_QUERY_BIND": null,
-    "LDAP_QUERY_PASSWORD": null,
-    "LDAP_USER_FILTER": null,
-    "LDAP_ADMIN_FILTER": null,
-    "LDAP_ID_ATTRIBUTE": "uid",
-    "LDAP_MAIL_ATTRIBUTE": "mail",
-    "LDAP_NAME_ATTRIBUTE": "name",
-    "OIDC_AUTH_ENABLED": false,
-    "OIDC_CLIENT_ID": null,
-    "OIDC_CONFIGURATION_URL": null,
-    "OIDC_SIGNUP_ENABLED": true,
-    "OIDC_USER_GROUP": null,
-    "OIDC_ADMIN_GROUP": null,
-    "OIDC_AUTO_REDIRECT": false,
-    "OIDC_PROVIDER_NAME": "OAuth",
-    "OIDC_REMEMBER_ME": false,
-    "OIDC_SIGNING_ALGORITHM": "RS256",
-    "OIDC_USER_CLAIM": "email",
-    "TESTING": false
-}
-[INFO|on|L62] 2024-04-30T14:15:22: Application startup complete.
-[INFO|server|L214] 2024-04-30T14:15:22: Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
-[INFO|httptools_impl|L481] 2024-04-30T14:15:25: 192.168.65.1:32068 - "GET / HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:26: 192.168.65.1:32068 - "GET /api/users/self HTTP/1.1" 401
-[INFO|httptools_impl|L481] 2024-04-30T14:15:26: 192.168.65.1:32068 - "GET /api/app/about HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:26: 192.168.65.1:32068 - "GET /api/app/about/startup-info HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:26: 192.168.65.1:32069 - "GET /api/app/about HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:26: 192.168.65.1:32070 - "GET /sw.js HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:38: 127.0.0.1:58970 - "GET /api/app/about HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:41: 192.168.65.1:32084 - "POST /api/auth/token HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:41: 192.168.65.1:32084 - "GET /api/users/self HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:15:49: 192.168.65.1:32091 - "GET /api/validators/user/name?name=ima_test HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:00: 192.168.65.1:32098 - "GET /api/validators/user/email?email=ima@test.com HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:08: 127.0.0.1:49556 - "GET /api/app/about HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:10: 192.168.65.1:32105 - "GET /api/validators/user/name?name=ima_test HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:10: 192.168.65.1:32106 - "GET /api/validators/user/email?email=ima@test.com HTTP/1.1" 200
-[INFO|seeders|L38] 2024-04-30T14:16:34: Seeding MultiPurposeLabel
-[INFO|httptools_impl|L481] 2024-04-30T14:16:34: 192.168.65.1:32120 - "GET /api/admin/groups/0c6cbdda-5a78-4023-93f9-6097ba68b278 HTTP/1.1" 200
-[INFO|seeders|L93] 2024-04-30T14:16:34: Seeding Ingredient Foods
-[INFO|seeders|L68] 2024-04-30T14:16:34: Seeding Ingredient Units
-[INFO|httptools_impl|L481] 2024-04-30T14:16:35: 192.168.65.1:32120 - "PUT /api/admin/groups/0c6cbdda-5a78-4023-93f9-6097ba68b278 HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:35: 192.168.65.1:32119 - "PUT /api/users/password HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:35: 192.168.65.1:32119 - "PUT /api/users/62adc5bb-75e9-45ab-b08e-bc6da203e885 HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:35: 192.168.65.1:32122 - "POST /api/groups/seeders/units HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:35: 192.168.65.1:32123 - "POST /api/groups/seeders/labels HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:38: 127.0.0.1:42658 - "GET /api/app/about HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:40: 192.168.65.1:32121 - "POST /api/groups/seeders/foods HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:44: 192.168.65.1:32121 - "GET /_nuxt/7ce0179.js HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:44: 192.168.65.1:32130 - "GET /_nuxt/e69bd5d.js HTTP/1.1" 200
-[INFO|httptools_impl|L481] 2024-04-30T14:16:44: 192.168.65.1:32121 - "GET /_nuxt/b670cdd.js HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:39:57: 192.168.65.1:24260 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:40:15: 127.0.0.1:47958 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:40:46: 127.0.0.1:43146 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:41:16: 127.0.0.1:45534 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:41:47: 127.0.0.1:37092 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:42:17: 127.0.0.1:38582 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:42:48: 127.0.0.1:48086 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:43:18: 127.0.0.1:51624 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:43:19: 192.168.65.1:24393 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_service|L70] 2024-05-02T08:43:19: Recipe Directory not Found: winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato
+[INFO|httptools_impl|L481] 2024-05-02T08:43:19: 192.168.65.1:24393 - "PUT /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:43:22: 192.168.65.1:24394 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_crud_routes|L149] 2024-05-02T08:43:22: No Entry Found on recipe controller action
+[INFO|httptools_impl|L481] 2024-05-02T08:43:22: 192.168.65.1:24394 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:43:49: 127.0.0.1:56406 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:05: 192.168.65.1:24425 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:05: 192.168.65.1:24425 - "GET /api/recipes?page=1&perPage=50 HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:05: 192.168.65.1:24426 - "GET /api/media/recipes/2c151e12-58b6-4471-b71e-1c3ecbd09351/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:05: 192.168.65.1:24427 - "GET /api/media/recipes/8195c4ef-16ea-4f65-b25c-73103e1c86be/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:05: 192.168.65.1:24428 - "GET /api/media/recipes/f8f4b60c-4ec4-49e0-88b9-006343332597/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:19: 127.0.0.1:36242 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:29: 192.168.65.1:24441 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:29: 192.168.65.1:24441 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:39: 192.168.65.1:24448 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_service|L70] 2024-05-02T08:44:39: Recipe Directory not Found: winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato
+[INFO|httptools_impl|L481] 2024-05-02T08:44:39: 192.168.65.1:24448 - "PUT /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:42: 192.168.65.1:24449 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_crud_routes|L149] 2024-05-02T08:44:42: No Entry Found on recipe controller action
+[INFO|httptools_impl|L481] 2024-05-02T08:44:42: 192.168.65.1:24449 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:49: 127.0.0.1:54668 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:55: 192.168.65.1:24462 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:55: 192.168.65.1:24462 - "GET /api/recipes?page=1&perPage=50 HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:55: 192.168.65.1:24463 - "GET /api/media/recipes/2c151e12-58b6-4471-b71e-1c3ecbd09351/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:55: 192.168.65.1:24464 - "GET /api/media/recipes/8195c4ef-16ea-4f65-b25c-73103e1c86be/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:55: 192.168.65.1:24465 - "GET /api/media/recipes/f8f4b60c-4ec4-49e0-88b9-006343332597/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:44:58: 192.168.65.1:24466 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:44:58: 192.168.65.1:24466 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:45:20: 127.0.0.1:33328 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:45:37: 192.168.65.1:24491 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_service|L70] 2024-05-02T08:45:37: Recipe Directory not Found: winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato
+[INFO|httptools_impl|L481] 2024-05-02T08:45:37: 192.168.65.1:24491 - "PUT /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:45:41: 192.168.65.1:24492 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_crud_routes|L149] 2024-05-02T08:45:41: No Entry Found on recipe controller action
+[INFO|httptools_impl|L481] 2024-05-02T08:45:41: 192.168.65.1:24492 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-heesy-roasted-zucchini-and-tomato HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:45:50: 127.0.0.1:41692 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:10: 192.168.65.1:24511 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:10: 192.168.65.1:24511 - "GET /api/recipes?page=1&perPage=50 HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:10: 192.168.65.1:24512 - "GET /api/media/recipes/2c151e12-58b6-4471-b71e-1c3ecbd09351/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:46:10: 192.168.65.1:24513 - "GET /api/media/recipes/8195c4ef-16ea-4f65-b25c-73103e1c86be/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:46:10: 192.168.65.1:24514 - "GET /api/media/recipes/f8f4b60c-4ec4-49e0-88b9-006343332597/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:46:15: 192.168.65.1:24521 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:15: 192.168.65.1:24521 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:21: 127.0.0.1:53216 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:27: 192.168.65.1:24528 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_service|L70] 2024-05-02T08:46:27: Recipe Directory not Found: winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato
+[INFO|httptools_impl|L481] 2024-05-02T08:46:27: 192.168.65.1:24528 - "PUT /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:46:51: 127.0.0.1:37848 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:47:21: 127.0.0.1:49214 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:47:52: 127.0.0.1:45304 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:47:56: 192.168.65.1:24583 - "GET /api/auth/refresh HTTP/1.1" 200
+[ERROR|recipe_crud_routes|L149] 2024-05-02T08:47:56: No Entry Found on recipe controller action
+[INFO|httptools_impl|L481] 2024-05-02T08:47:56: 192.168.65.1:24583 - "GET /api/recipes/winner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:48:08: 192.168.65.1:24590 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:48:08: 192.168.65.1:24590 - "GET /api/recipes?page=1&perPage=50 HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:48:09: 192.168.65.1:24591 - "GET /api/media/recipes/2c151e12-58b6-4471-b71e-1c3ecbd09351/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:48:09: 192.168.65.1:24592 - "GET /api/media/recipes/8195c4ef-16ea-4f65-b25c-73103e1c86be/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:48:09: 192.168.65.1:24593 - "GET /api/media/recipes/f8f4b60c-4ec4-49e0-88b9-006343332597/images/original.webp HTTP/1.1" 404
+[INFO|httptools_impl|L481] 2024-05-02T08:48:22: 127.0.0.1:47414 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:48:27: 192.168.65.1:24606 - "GET /api/auth/refresh HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:48:27: 192.168.65.1:24606 - "GET /api/recipes/inner-winner-chicken-orzo-dinner-with-cheesy-roasted-zucchini-and-tomato HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:48:53: 127.0.0.1:53726 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:49:23: 127.0.0.1:41212 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:49:53: 127.0.0.1:56778 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:50:24: 127.0.0.1:36286 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:50:54: 127.0.0.1:49284 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:51:25: 127.0.0.1:52172 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:51:56: 127.0.0.1:44464 - "GET /api/app/about HTTP/1.1" 200
+[INFO|httptools_impl|L481] 2024-05-02T08:52:26: 127.0.0.1:47848 - "GET /api/app/about HTTP/1.1" 200
