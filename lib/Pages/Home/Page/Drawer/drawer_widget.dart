@@ -47,8 +47,9 @@ class _Drawer extends Drawer {
                         ),
                         const SizedBox(width: 10),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(appBloc.state.user.fullName.toString())
+                            Text(appBloc.state.user.fullName.toString()),
                           ],
                           // TODO: Link to favorite recipes once they are available in the app
                         )
@@ -63,6 +64,14 @@ class _Drawer extends Drawer {
                       children: [
                         const CreateButtonDropDown(),
                         const SizedBox(height: 10),
+                        _PageSelectionTile(
+                          text: "Favorite Recipes",
+                          icon: Icons.favorite,
+                          onTap: () {
+                            homeCubit.setScreen(const FavoriteRecipesPage());
+                            Navigator.pop(context);
+                          },
+                        ),
                         _PageSelectionTile(
                           icon: Icons.search,
                           text: "Search",

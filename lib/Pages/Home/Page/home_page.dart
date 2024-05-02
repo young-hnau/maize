@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mealie_mobile/Pages/Home/Categories/categories_page.dart';
+import 'package:mealie_mobile/Pages/Home/FavoriteRecipes/favorite_recipes_page.dart';
 import 'package:mealie_mobile/Pages/Home/MealPlanner/meal_planner_page.dart';
 import 'package:mealie_mobile/Pages/Home/Page/Drawer/CreateButtonDropdown/create_button_dropdown.dart';
 import 'package:mealie_mobile/Pages/Home/Page/Drawer/drawer_cubit.dart';
