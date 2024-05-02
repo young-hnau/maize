@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'Models/shopping_lists.dart';
 part 'Models/recipe.dart';
 part 'Models/labels.dart';
+part 'Models/favorites.dart';
 part 'Models/food.dart';
 part 'Models/unit.dart';
 part 'Models/tags.dart';
@@ -608,6 +609,73 @@ class MealieRepository {
       }
     }
     return null;
+  }
+
+  /// Gets the logged in user's favorites
+  ///
+  /// This varies from getFavoriteRecipes by giving back only the recipe
+  /// IDs and not the recipes themselves
+  ///
+  /// Return:
+  /// - List<Favorites?>
+  Future<List<Favorites?>> getFavorites() async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/users/${user?.id}/favorites');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    List<Favorites?> favorites = [];
+
+    try {
+      final Response response = await dio.getUri(uri, options: options);
+      for (dynamic recipe in response.data['ratings'] ?? []) {
+        favorites.add(Favorites.fromData(data: recipe));
+      }
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return favorites;
+  }
+
+  /// Gets the logged in user's favorite recipes
+  ///
+  /// Return:
+  /// - List<Recipe?>
+  Future<List<Recipe?>> getFavoriteRecipes() async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/users/${user?.id}/favorites');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    List<Recipe?> recipes = [];
+
+    try {
+      final Response response = await dio.getUri(uri, options: options);
+      for (dynamic favorite in response.data['ratings'] ?? []) {
+        Recipe? recipe =
+            await getRecipe(slug: Favorites.fromData(data: favorite)!.recipeId);
+        recipes.add(recipe);
+      }
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return recipes;
   }
 }
 

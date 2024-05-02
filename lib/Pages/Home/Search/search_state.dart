@@ -11,6 +11,7 @@ class SearchState extends Equatable {
     this.errorMessage,
     this.updateAt,
     this.searchQuery,
+    this.favorites,
   }) : pagingController = PagingController<int, Recipe>(firstPageKey: 1);
 
   final SearchStatus status;
@@ -18,6 +19,7 @@ class SearchState extends Equatable {
   final DateTime? updateAt;
   final PagingController<int, Recipe> pagingController;
   final String? searchQuery;
+  final List<Favorites?>? favorites;
 
   SearchState copyWith({
     SearchStatus? status,
@@ -27,12 +29,14 @@ class SearchState extends Equatable {
     DateTime? updateAt,
     String? token,
     String? searchQuery,
+    List<Favorites?>? favorites,
   }) {
     return SearchState(
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       updateAt: updateAt ?? this.updateAt,
       searchQuery: searchQuery ?? this.searchQuery,
+      favorites: favorites ?? this.favorites,
     );
   }
 
@@ -43,5 +47,6 @@ class SearchState extends Equatable {
         updateAt,
         pagingController,
         searchQuery,
+        favorites,
       ];
 }

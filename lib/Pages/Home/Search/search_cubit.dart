@@ -25,6 +25,7 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> _initialize() async {
     state.pagingController
         .addPageRequestListener((pageKey) => getRecipes(pageKey: pageKey));
+    emit(state.copyWith(favorites: await appBloc.repo.getFavorites()));
   }
 
   Future<void> getRecipes({int pageKey = 1}) async {
