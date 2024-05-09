@@ -103,6 +103,19 @@ class _LoadedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ShoppingListItem> shoppingList =
         context.read<ShoppingListCubit>().state.shoppingList?.items ?? [];
+    List<ShoppingListItem> uncheckedItems = shoppingList
+        .map((ShoppingListItem item) {
+          if (!item.checked) return item;
+        })
+        .whereType<ShoppingListItem>()
+        .toList();
+    List<ShoppingListItem> checkedItems = shoppingList
+        .map((ShoppingListItem item) {
+          if (item.checked) return item;
+        })
+        .whereType<ShoppingListItem>()
+        .toList();
+
     return Stack(
       children: [
         RefreshIndicator(
@@ -129,38 +142,72 @@ class _LoadedScreen extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: shoppingList.length,
+                  itemCount: uncheckedItems.length,
                   itemBuilder: (context, index) {
-                    ShoppingListItem shoppingListItem = shoppingList[index];
-                    return Column(children: [
-                      _ShoppingItemTile(
-                        showChecked: shoppingListCubit.state.showChecked,
-                        item: shoppingListItem,
-                        shoppingListCubit: shoppingListCubit,
-                        onChecked: () =>
-                            shoppingListCubit.checkItem(shoppingListItem),
-                        onDelete: () {
-                          final SnackBar snackBar = SnackBar(
-                            content: Text(
-                                'Are you sure you want to delete ${shoppingListItem.note}?'),
-                            action: SnackBarAction(
-                              label: "Yes",
-                              onPressed: () {
-                                shoppingListCubit.deleteItem(shoppingListItem);
-                              },
-                            ),
-                          );
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                      ),
-                      if (index == shoppingList.length - 1)
-                        const SizedBox(height: 40),
-                    ]);
+                    ShoppingListItem shoppingListItem = uncheckedItems[index];
+                    return _ShoppingItemTile(
+                      item: shoppingListItem,
+                      shoppingListCubit: shoppingListCubit,
+                    );
                   },
                 ),
               ),
-              const SizedBox(height: 10),
+              shoppingListCubit.state.showChecked && checkedItems.isNotEmpty
+                  ? Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Container(
+                          height: 40,
+                          width: 225,
+                          decoration: const BoxDecoration(
+                              color: MealieColors.brightRed,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: InkWell(
+                            onTap: shoppingListCubit.deleteCheckedItems,
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.trash,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Text(
+                                  "Delete Checked Items",
+                                  style: TextStyle(color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              shoppingListCubit.state.showChecked
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: checkedItems.length,
+                        itemBuilder: (context, index) {
+                          ShoppingListItem shoppingListItem =
+                              checkedItems[index];
+                          return _ShoppingItemTile(
+                            item: shoppingListItem,
+                            shoppingListCubit: shoppingListCubit,
+                          );
+                        },
+                      ),
+                    )
+                  : Container(),
+              const SizedBox(height: 50),
             ],
           ),
         ),
@@ -192,6 +239,41 @@ class _BottomButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          // shoppingListCubit.state.showChecked
+          //     ? Container(
+          //         height: 35,
+          //         width: 140,
+          //         decoration: const BoxDecoration(
+          //             color: MealieColors.orange,
+          //             borderRadius: BorderRadius.all(Radius.circular(8))),
+          //         child: InkWell(
+          //           onTap: () => shoppingListCubit.toggleShowChecked(),
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //             children: [
+          //               Expanded(
+          //                 child: Center(
+          //                   child: FaIcon(
+          //                     shoppingListCubit.state.showChecked
+          //                         ? FontAwesomeIcons.eyeSlash
+          //                         : FontAwesomeIcons.eye,
+          //                     color: Colors.white,
+          //                     size: 20,
+          //                   ),
+          //                 ),
+          //               ),
+          //               Expanded(
+          //                 child: Text(
+          //                   "Clear Checked",
+          //                   style: const TextStyle(color: Colors.white),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       )
+          //     : Container(),
+          // const SizedBox(width: 10),
           Container(
             height: 35,
             width: 100,
@@ -257,17 +339,25 @@ class _BottomButtons extends StatelessWidget {
 class _ShoppingItemTile extends StatelessWidget {
   const _ShoppingItemTile({
     required this.item,
-    required this.onChecked,
-    required this.onDelete,
-    required this.showChecked,
     required this.shoppingListCubit,
   });
 
   final ShoppingListItem item;
-  final Function onChecked;
-  final Function onDelete;
-  final bool showChecked;
   final ShoppingListCubit shoppingListCubit;
+
+  void onDelete(BuildContext context) {
+    final SnackBar snackBar = SnackBar(
+      content: Text('Are you sure you want to delete ${item.note}?'),
+      action: SnackBarAction(
+        label: "Yes",
+        onPressed: () {
+          shoppingListCubit.deleteItem(item);
+        },
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -289,27 +379,15 @@ class _ShoppingItemTile extends StatelessWidget {
         ),
       );
     }
-    if (!item.checked) {
-      return InkWell(
-        onTap: () => shoppingListCubit.toggleEditing(item),
-        child: _UncheckedTile(
-            onChecked: onChecked, item: item, onDelete: onDelete),
-      );
-    } else {
-      if (showChecked) {
-        return InkWell(
-          onTap: () => shoppingListCubit.toggleEditing(item),
-          child: _CheckedTile(
-            onChecked: onChecked,
-            item: item,
-            onDelete: onDelete,
-            shoppingListCubit: shoppingListCubit,
-          ),
-        );
-      } else {
-        return Container();
-      }
-    }
+    return InkWell(
+      onTap: () => shoppingListCubit.toggleEditing(item),
+      child: _ItemTile(
+        onChecked: () => shoppingListCubit.checkItem(item),
+        item: item,
+        onDelete: () => onDelete(context),
+        shoppingListCubit: shoppingListCubit,
+      ),
+    );
   }
 }
 
@@ -433,8 +511,8 @@ class CurrentlyEditingItemTile extends StatelessWidget {
   }
 }
 
-class _CheckedTile extends StatelessWidget {
-  const _CheckedTile({
+class _ItemTile extends StatelessWidget {
+  const _ItemTile({
     required this.onChecked,
     required this.item,
     required this.onDelete,
@@ -479,59 +557,17 @@ class _CheckedTile extends StatelessWidget {
                 ],
               ),
             ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Container(
-                  height: 1,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _UncheckedTile extends StatelessWidget {
-  const _UncheckedTile({
-    required this.onChecked,
-    required this.item,
-    required this.onDelete,
-  });
-
-  final Function onChecked;
-  final ShoppingListItem item;
-  final Function onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: SizedBox(
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Checkbox(value: item.checked, onChanged: (_) => onChecked()),
-            const SizedBox(width: 10),
-            Text(
-              item.note,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-            ),
-            if (item.quantity > 1) const SizedBox(width: 10),
-            if (item.quantity > 1) Text("x${item.quantity}"),
-            const Spacer(flex: 1),
-            IconButton(
-              onPressed: () => onDelete(),
-              icon: Icon(
-                Icons.delete,
-                color: Colors.black.withOpacity(0.5),
-              ),
-            ),
-            const SizedBox(width: 10),
+            item.checked
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: Container(
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

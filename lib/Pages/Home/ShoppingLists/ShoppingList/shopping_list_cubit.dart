@@ -35,18 +35,20 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
     }
 
     final List<ShoppingListItem>? shoppingListItems = shoppingList.items;
-    shoppingListItems?.sort((a, b) {
-      if (a.checked && b.checked) {
-        return 0;
-      } else if (!a.checked && !b.checked) {
-        return 0;
-      } else if (a.checked && !b.checked) {
-        return 1;
-      } else if (!a.checked && b.checked) {
-        return -1;
-      }
-      return 0;
-    });
+    shoppingListItems
+        ?.sort((a, b) => a.note.toLowerCase().compareTo(b.note.toLowerCase()));
+    // shoppingListItems?.sort((a, b) {
+    //   if (a.checked && b.checked) {
+    //     return 0;
+    //   } else if (!a.checked && !b.checked) {
+    //     return 0;
+    //   } else if (a.checked && !b.checked) {
+    //     return 1;
+    //   } else if (!a.checked && b.checked) {
+    //     return -1;
+    //   }
+    //   return 0;
+    // });
 
     shoppingList = shoppingList.copyWith(items: shoppingListItems);
     emit(state.copyWith(
@@ -115,5 +117,15 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
     Overlay.of(context).insert(overlayEntry);
 
     emit(state.copyWith(status: state.status, overlayEntry: overlayEntry));
+  }
+
+  Future<void> deleteCheckedItems() async {
+    emit(state.copyWith(status: ShoppingListStatus.loading));
+    for (ShoppingListItem item in state.shoppingList!.items!) {
+      if (item.checked) {
+        await appBloc.repo.deleteOneShoppingListItem(item: item);
+      }
+    }
+    getShoppingList();
   }
 }
