@@ -148,21 +148,21 @@ class Recipe extends Equatable {
 
     final List<Asset>? assets = data['assets'] == null
         ? null
-        : List<Asset>.from(
-            data['assets'].map((dynamic tool) => Tool.fromData(data: tool)) ??
-                const []);
+        : List<Asset>.from(data['assets']
+                .map((dynamic asset) => Asset.fromData(data: asset)) ??
+            const []);
 
     final List<Note>? notes = data['notes'] == null
         ? null
         : List<Note>.from(
-            data['notes'].map((dynamic tool) => Tool.fromData(data: tool)) ??
+            data['notes'].map((dynamic note) => Note.fromData(data: note)) ??
                 const []);
 
     final List<Comment>? comments = data['comments'] == null
         ? null
-        : List<Comment>.from(
-            data['comments'].map((dynamic tool) => Tool.fromData(data: tool)) ??
-                const []);
+        : List<Comment>.from(data['comments']
+                .map((dynamic comment) => Comment.fromData(data: comment)) ??
+            const []);
 
     return Recipe(
       id: data['id'],
