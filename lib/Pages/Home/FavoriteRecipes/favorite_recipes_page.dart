@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mealie_mobile/Pages/Home/FavoriteRecipes/favorite_recipes_cubit.dart';
-import 'package:mealie_mobile/Widgets/recipe_card_widget.dart';
+import 'package:mealie_mobile/Widgets/recipe_card/recipe_card_widget.dart';
 import 'package:mealie_mobile/app/app_bloc.dart';
 import 'package:mealie_mobile/colors.dart';
 import 'package:mealie_repository/mealie_repository.dart';

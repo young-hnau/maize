@@ -677,6 +677,60 @@ class MealieRepository {
     }
     return recipes;
   }
+
+  /// Adds the provided recipe to the user's favorite recipes
+  ///
+  /// Return:
+  Future<void> addFavoriteRecipe(Recipe recipe) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this
+        .uri
+        .replace(path: '/api/users/${user?.id}/favorites/${recipe.slug}');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    try {
+      await dio.postUri(uri, options: options);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return;
+  }
+
+  /// Removes the provided recipe from the user's favorite recipes
+  ///
+  /// Return:
+  Future<void> removeFavoriteRecipe(Recipe recipe) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this
+        .uri
+        .replace(path: '/api/users/${user?.id}/favorites/${recipe.slug}');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    try {
+      await dio.deleteUri(uri, options: options);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return;
+  }
 }
 
 enum ImageType {
