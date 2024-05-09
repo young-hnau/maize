@@ -239,41 +239,6 @@ class _BottomButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // shoppingListCubit.state.showChecked
-          //     ? Container(
-          //         height: 35,
-          //         width: 140,
-          //         decoration: const BoxDecoration(
-          //             color: MealieColors.orange,
-          //             borderRadius: BorderRadius.all(Radius.circular(8))),
-          //         child: InkWell(
-          //           onTap: () => shoppingListCubit.toggleShowChecked(),
-          //           child: Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //             children: [
-          //               Expanded(
-          //                 child: Center(
-          //                   child: FaIcon(
-          //                     shoppingListCubit.state.showChecked
-          //                         ? FontAwesomeIcons.eyeSlash
-          //                         : FontAwesomeIcons.eye,
-          //                     color: Colors.white,
-          //                     size: 20,
-          //                   ),
-          //                 ),
-          //               ),
-          //               Expanded(
-          //                 child: Text(
-          //                   "Clear Checked",
-          //                   style: const TextStyle(color: Colors.white),
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       )
-          //     : Container(),
-          // const SizedBox(width: 10),
           Container(
             height: 35,
             width: 100,
