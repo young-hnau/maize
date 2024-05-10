@@ -28,14 +28,41 @@ class RecipeCubit extends Cubit<RecipeState> {
       recipe: recipe,
       editingRecipe: recipe,
     ));
+    emit(state.copyWith(status: RecipeStatus.loading));
     await getRecipe();
+    await getRatings();
+    emit(state.copyWith(status: RecipeStatus.loaded));
     if (isEditing == true) {
       beginEditing();
     }
   }
 
+  Future<void> getRatings() async {
+    try {
+      List<Rating>? ratings;
+
+      ratings = await appBloc.repo.getRecipeRatings();
+
+      if (ratings == null || state.recipe == null) {
+        throw Exception("An unknown error occuried while getting recipes");
+      }
+
+      Rating rating = ratings
+          .where((element) => element.recipeId == state.recipe!.id)
+          .first;
+
+      emit(state.copyWith(
+        userRating: rating,
+      ));
+    } on Exception catch (err) {
+      emit(state.copyWith(
+        status: RecipeStatus.error,
+        errorMessage: err.toString(),
+      ));
+    }
+  }
+
   Future<void> getRecipe({int pageKey = 1, String? search}) async {
-    emit(state.copyWith(status: RecipeStatus.loading));
     try {
       Recipe? recipe;
       if (state.recipe?.slug != null) {
@@ -46,7 +73,6 @@ class RecipeCubit extends Cubit<RecipeState> {
         }
       }
       emit(state.copyWith(
-        status: RecipeStatus.loaded,
         recipe: recipe ?? state.recipe,
         editingRecipe: recipe ?? state.recipe,
       ));
@@ -78,10 +104,12 @@ class RecipeCubit extends Cubit<RecipeState> {
             state.recipe!.recipeIngredient!.map((e) => e.display).join('\n')));
   }
 
-  Future<void> setRating(int rating) async {
-    await appBloc.repo
-        .updateOneRecipe(recipe: state.recipe!.copyWith(rating: rating));
-    getRecipe();
+  Future<void> setRating(double rating) async {
+    emit(state.copyWith(status: RecipeStatus.loading));
+    await appBloc.repo.setRecipeRating(recipe: state.recipe!, rating: rating);
+    await getRecipe();
+    await getRatings();
+    emit(state.copyWith(status: RecipeStatus.loaded));
   }
 
   void endEditing() {
@@ -96,8 +124,10 @@ class RecipeCubit extends Cubit<RecipeState> {
   }
 
   Future<void> saveRecipe() async {
+    emit(state.copyWith(status: RecipeStatus.loading));
     await appBloc.repo.updateOneRecipe(recipe: state.editingRecipe!);
-    getRecipe();
+    await getRecipe();
+    emit(state.copyWith(status: RecipeStatus.loaded));
   }
 
   void updateRecipe({
@@ -288,5 +318,18 @@ class RecipeCubit extends Cubit<RecipeState> {
     recipe = recipe.copyWith(recipeInstructions: instructions);
 
     emit(state.copyWith(editingRecipe: recipe));
+  }
+
+  Future<void> toggleFavorite() async {
+    if (state.recipe == null || state.userRating == null) return;
+    emit(state.copyWith(status: RecipeStatus.loading));
+    if (state.userRating!.isFavorite) {
+      await appBloc.repo.removeFavoriteRecipe(state.recipe!);
+    } else {
+      await appBloc.repo.addFavoriteRecipe(state.recipe!);
+    }
+    await getRecipe();
+    await getRatings();
+    emit(state.copyWith(status: RecipeStatus.loaded));
   }
 }

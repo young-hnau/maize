@@ -88,7 +88,7 @@ class Recipe extends Equatable {
   final List<RecipeCategory>? recipeCategory;
   final List<Tag>? tags;
   final List<Tool>? tools;
-  final int? rating;
+  final double? rating;
   final String? orgURL;
   final String? dateAdded;
   final String? dateUpdated;
@@ -316,7 +316,7 @@ class Recipe extends Equatable {
     List<RecipeCategory>? recipeCategory,
     List<Tag>? tags,
     List<Tool>? tools,
-    int? rating,
+    double? rating,
     String? orgURL,
     String? dateAdded,
     String? dateUpdated,

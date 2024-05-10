@@ -8,7 +8,7 @@ class _StarRating extends StatelessWidget {
     this.iconSize,
   });
 
-  final int rating;
+  final double rating;
   final double? iconSize;
   final double? spacing;
   final Function setRating;
@@ -21,12 +21,12 @@ class _StarRating extends StatelessWidget {
       children: [
         Row(
           children: List<Widget>.generate(
-            rating,
+            rating.toInt(),
             growable: false,
             (index) => Padding(
               padding: EdgeInsets.symmetric(horizontal: spacing!),
               child: IconButton(
-                onPressed: () => setRating(index + 1),
+                onPressed: () => setRating(index.toDouble() + 1),
                 icon: Icon(
                   Icons.star,
                   color: MealieColors.red,
@@ -38,12 +38,12 @@ class _StarRating extends StatelessWidget {
         ),
         Row(
           children: List<Widget>.generate(
-            5 - (rating),
+            (5 - (rating)).toInt(),
             growable: false,
             (index) => Padding(
               padding: EdgeInsets.symmetric(horizontal: spacing!),
               child: IconButton(
-                onPressed: () => setRating(index + 1 + rating),
+                onPressed: () => setRating(index.toDouble() + 1 + rating),
                 icon: Icon(
                   Icons.star_border,
                   color: MealieColors.peach,

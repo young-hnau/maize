@@ -138,7 +138,7 @@ class _StarRating extends StatelessWidget {
       children: [
         Row(
           children: List<Widget>.generate(
-            recipe.rating ?? 0,
+            (recipe.rating ?? 0).toInt(),
             (index) => const Icon(
               Icons.star,
               color: MealieColors.red,
@@ -148,7 +148,7 @@ class _StarRating extends StatelessWidget {
         ),
         Row(
           children: List<Widget>.generate(
-            5 - (recipe.rating ?? 0),
+            (5 - (recipe.rating ?? 0)).toInt(),
             (index) => const Icon(
               Icons.star_border,
               color: MealieColors.peach,

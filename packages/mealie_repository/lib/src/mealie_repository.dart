@@ -11,6 +11,7 @@ part 'Models/labels.dart';
 part 'Models/favorites.dart';
 part 'Models/food.dart';
 part 'Models/unit.dart';
+part 'Models/ratings.dart';
 part 'Models/tags.dart';
 part 'Models/tools.dart';
 part 'Models/user.dart';
@@ -730,6 +731,69 @@ class MealieRepository {
       }
     }
     return;
+  }
+
+  /// Sets the recipe rating to the provided double
+  ///
+  /// Return:
+  Future<void> setRecipeRating(
+      {required Recipe recipe, required double rating}) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri =
+        this.uri.replace(path: '/api/users/${user?.id}/ratings/${recipe.slug}');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    final Map<String, dynamic> data = {"rating": rating};
+
+    try {
+      await dio.postUri(uri, options: options, data: data);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return;
+  }
+
+  /// Gets all the ratings for all the recipes
+  ///
+  /// Return:
+  /// - List<Rating>?
+  Future<List<Rating>?> getRecipeRatings() async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(path: '/api/users/${user?.id}/ratings');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    List<Rating> ratings = [];
+
+    try {
+      final Response response = await dio.getUri(uri, options: options);
+      for (var rating in response.data['ratings']) {
+        final Rating? r = Rating.fromData(data: rating);
+        if (r == null) break;
+        ratings.add(r);
+      }
+      return ratings;
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+    return null;
   }
 }
 

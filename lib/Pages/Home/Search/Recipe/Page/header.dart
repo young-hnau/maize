@@ -59,17 +59,14 @@ class _LoadedButtons extends StatelessWidget {
     return Row(
       children: [
         _RoundedIconButton(
-          onTap: () {
-            const SnackBar snackBar = SnackBar(
-              content: Text('This feature has not yet been implemented.'),
-            );
-
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          },
+          onTap: () => recipeCubit.toggleFavorite(),
           color: MealieColors.blue,
           iconColor: Colors.white,
           iconSize: 20,
-          icon: const FaIcon(FontAwesomeIcons.heart),
+          icon: recipeCubit.state.userRating != null &&
+                  recipeCubit.state.userRating!.isFavorite
+              ? const FaIcon(FontAwesomeIcons.solidHeart)
+              : const FaIcon(FontAwesomeIcons.heart),
         ),
         const SizedBox(width: 4),
         _RoundedIconButton(

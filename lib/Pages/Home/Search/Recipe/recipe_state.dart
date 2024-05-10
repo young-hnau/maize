@@ -13,6 +13,7 @@ class RecipeState extends Equatable {
     required this.status,
     this.errorMessage,
     this.recipe,
+    this.userRating,
     Recipe? editingRecipe,
     List<String>? checkedIngredients,
     List<String>? checkedInstructions,
@@ -23,6 +24,7 @@ class RecipeState extends Equatable {
   final RecipeStatus status;
   final String? errorMessage;
   final Recipe? recipe;
+  final Rating? userRating;
   final Recipe? _editingRecipe;
   final List<String>? _checkedIngredients;
   final List<String>? _checkedInstructions;
@@ -44,6 +46,7 @@ class RecipeState extends Equatable {
     Recipe? editingRecipe,
     List<String>? checkedIngredients,
     List<String>? checkedInstructions,
+    Rating? userRating,
   }) {
     return RecipeState(
       status: status ?? this.status,
@@ -52,6 +55,7 @@ class RecipeState extends Equatable {
       editingRecipe: editingRecipe ?? this.editingRecipe,
       checkedIngredients: checkedIngredients ?? this.checkedIngredients,
       checkedInstructions: checkedInstructions ?? this.checkedInstructions,
+      userRating: userRating ?? this.userRating,
     );
   }
 
@@ -66,5 +70,6 @@ class RecipeState extends Equatable {
             : List<Ingredient>.from(editingRecipe!.recipeIngredient!),
         checkedIngredients,
         checkedInstructions,
+        userRating,
       ];
 }

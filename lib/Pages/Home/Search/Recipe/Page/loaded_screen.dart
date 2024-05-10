@@ -112,11 +112,17 @@ class _LoadedScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          _StarRating(
-            rating: recipe.rating ?? 0,
-            iconSize: 25,
-            spacing: 0,
-            setRating: recipeCubit.setRating,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _StarRating(
+                rating: recipeCubit.state.userRating?.rating ?? 0.0,
+                iconSize: 25,
+                spacing: 0,
+                setRating: recipeCubit.setRating,
+              ),
+              Text("Average Rating: ${recipe.rating}"),
+            ],
           ),
           const SizedBox(height: 10),
           Container(

@@ -1,25 +1,25 @@
-# Username: imatest
-# Password: testtest
+# username: ima_test
+# password: testtest
 
+version: "3.4"
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v1.5.1 #
     container_name: mealie
-    restart: always
-    ports:
-      - "9925:9000" #
-    deploy:
-      resources:
-        limits:
-          memory: 1000M #
+    image: ghcr.io/mealie-recipes/mealie:latest
+    restart: unless-stopped
     volumes:
       - ./mealie-data:/app/data/
+    ports:
+      - 9925:9000
     environment:
-      # Set Backend ENV Variables Here
-      ALLOW_SIGNUP: true
-      PUID: 1000
-      PGID: 1000
-      TZ: America/Indianapolis
+      ALLOW_SIGNUP: "false"
+      LOG_LEVEL: "DEBUG"
+
+      DB_ENGINE: sqlite
+
+      # =====================================
+      # Web Concurrency
+      WEB_GUNICORN: "false"
+      WORKERS_PER_CORE: 0.5
       MAX_WORKERS: 1
       WEB_CONCURRENCY: 1
-      # BASE_URL: https://mealie.yourdomain.com
