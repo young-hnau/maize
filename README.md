@@ -64,6 +64,10 @@ To be added...
 
 Clone the repository, install Flutter and build the app from source.
 
+## Communication
+
+Come join our [Matrix chat room](https://matrix.to/#/#maize-chat:matrix.hnau.dev) to discuss tha app, feature ideas, request support, and much more!
+
 ## Licensing & Contributing
 
 Maize is licensed under the GNU Affero General Public License. This means that you can modify Maize, as well as contribute to it. However, the maintainers assume no liability and offer no warranty on the software provided.
