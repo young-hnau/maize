@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/BulkURLImport/bulk_url_import.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/DebugScraper/debug_scraper_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/FromImage/from_image_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/ImportURL/import_url_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/ImportZIP/import_zip_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Manual/manual_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/create_recipe_cubit.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Home/CreateRecipe/BulkURLImport/bulk_url_import.dart';
+import 'package:maize/Pages/Home/CreateRecipe/DebugScraper/debug_scraper_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/FromImage/from_image_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/ImportURL/import_url_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/ImportZIP/import_zip_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Manual/manual_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Page/create_recipe_cubit.dart';
+import 'package:maize/colors.dart';
 
 abstract class MenuItems {
   static final url = MenuItem(

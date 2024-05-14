@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/app/app_bloc.dart';
 import 'package:mealie_repository/mealie_repository.dart';
 
 part 'provide_uri_state.dart';

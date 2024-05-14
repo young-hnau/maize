@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/Search/Recipe/Page/recipe_page.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/Pages/Home/Page/home_cubit.dart';
+import 'package:maize/Pages/Home/Search/Recipe/Page/recipe_page.dart';
+import 'package:maize/app/app_bloc.dart';
 import 'package:mealie_repository/mealie_repository.dart';
 
 part 'import_url_state.dart';

@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mealie_mobile/Pages/Home/Search/search_page.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/Pages/Home/Search/search_page.dart';
+import 'package:maize/app/app_bloc.dart';
 
 part 'home_state.dart';
 

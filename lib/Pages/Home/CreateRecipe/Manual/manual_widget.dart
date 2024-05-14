@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Manual/manual_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Manual/manual_cubit.dart';
+import 'package:maize/Pages/Home/Page/home_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
+import 'package:maize/colors.dart';
 
 class ManualWidget extends StatelessWidget {
   const ManualWidget({super.key});

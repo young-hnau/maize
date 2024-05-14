@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealie_mobile/Pages/Home/Categories/categories_page.dart';
-import 'package:mealie_mobile/Pages/Home/FavoriteRecipes/favorite_recipes_page.dart';
-import 'package:mealie_mobile/Pages/Home/MealPlanner/meal_planner_page.dart';
-import 'package:mealie_mobile/Pages/Home/Page/Drawer/CreateButtonDropdown/create_button_dropdown.dart';
-import 'package:mealie_mobile/Pages/Home/Page/Drawer/drawer_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/Search/search_page.dart';
-import 'package:mealie_mobile/Pages/Home/ShoppingLists/shopping_lists_page.dart';
-import 'package:mealie_mobile/Pages/Home/Tags/tags_page.dart';
-import 'package:mealie_mobile/Pages/Home/Timeline/timeline_page.dart';
-import 'package:mealie_mobile/Pages/Home/Tools/tools_page.dart';
-import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Home/Categories/categories_page.dart';
+import 'package:maize/Pages/Home/FavoriteRecipes/favorite_recipes_page.dart';
+import 'package:maize/Pages/Home/MealPlanner/meal_planner_page.dart';
+import 'package:maize/Pages/Home/Page/Drawer/CreateButtonDropdown/create_button_dropdown.dart';
+import 'package:maize/Pages/Home/Page/Drawer/drawer_cubit.dart';
+import 'package:maize/Pages/Home/Search/search_page.dart';
+import 'package:maize/Pages/Home/ShoppingLists/shopping_lists_page.dart';
+import 'package:maize/Pages/Home/Tags/tags_page.dart';
+import 'package:maize/Pages/Home/Timeline/timeline_page.dart';
+import 'package:maize/Pages/Home/Tools/tools_page.dart';
+import 'package:maize/Pages/Home/Page/home_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
+import 'package:maize/colors.dart';
 
 part 'Drawer/drawer_widget.dart';
 

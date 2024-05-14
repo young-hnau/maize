@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flow_builder/flow_builder.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/app/routes.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/app/app_bloc.dart';
+import 'package:maize/app/routes.dart';
+import 'package:maize/colors.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

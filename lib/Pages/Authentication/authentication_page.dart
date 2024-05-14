@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mealie_mobile/Pages/Authentication/authentication_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Authentication/authentication_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
+import 'package:maize/colors.dart';
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({Key? key}) : super(key: key);

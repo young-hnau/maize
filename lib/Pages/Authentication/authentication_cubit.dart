@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/app/app_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'authentication_state.dart';

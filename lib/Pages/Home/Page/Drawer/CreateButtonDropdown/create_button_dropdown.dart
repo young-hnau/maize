@@ -2,10 +2,10 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mealie_mobile/Pages/Home/CreateCookbook/create_cookbook_page.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/create_recipe_page.dart';
-import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Home/CreateCookbook/create_cookbook_page.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Page/create_recipe_page.dart';
+import 'package:maize/Pages/Home/Page/home_cubit.dart';
+import 'package:maize/colors.dart';
 
 abstract class MenuItems {
   static final create = MenuItem(

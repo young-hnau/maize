@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/DropDownButton/drop_down_widget.dart';
-import 'package:mealie_mobile/Pages/Home/CreateRecipe/Page/create_recipe_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/Page/home_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Page/DropDownButton/drop_down_widget.dart';
+import 'package:maize/Pages/Home/CreateRecipe/Page/create_recipe_cubit.dart';
+import 'package:maize/Pages/Home/Page/home_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
 
 class CreateRecipePage extends StatelessWidget {
   const CreateRecipePage({

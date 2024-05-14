@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mealie_mobile/Pages/Home/ShoppingLists/CreateShoppingListOverlay/create_shopping_list_cubit.dart';
-import 'package:mealie_mobile/Pages/Home/ShoppingLists/shopping_lists_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
-import 'package:mealie_mobile/colors.dart';
+import 'package:maize/Pages/Home/ShoppingLists/CreateShoppingListOverlay/create_shopping_list_cubit.dart';
+import 'package:maize/Pages/Home/ShoppingLists/shopping_lists_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
+import 'package:maize/colors.dart';
 
 class CreateShoppingListOverlay extends OverlayEntry {
   CreateShoppingListOverlay({required ShoppingListsCubit shoppingListsCubit})

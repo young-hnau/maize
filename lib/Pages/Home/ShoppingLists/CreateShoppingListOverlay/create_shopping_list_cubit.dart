@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mealie_mobile/Pages/Home/ShoppingLists/shopping_lists_cubit.dart';
-import 'package:mealie_mobile/app/app_bloc.dart';
+import 'package:maize/Pages/Home/ShoppingLists/shopping_lists_cubit.dart';
+import 'package:maize/app/app_bloc.dart';
 
 part 'create_shopping_list_state.dart';
 

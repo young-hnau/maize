@@ -1,4 +1,4 @@
-package com.example.mealie_mobile
+package com.example.maize
 
 import io.flutter.embedding.android.FlutterActivity
 
