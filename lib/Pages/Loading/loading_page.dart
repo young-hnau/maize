@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  const LoadingPage({super.key});
 
   static Page page() => const MaterialPage<void>(child: LoadingPage());
 

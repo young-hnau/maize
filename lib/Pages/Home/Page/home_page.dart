@@ -18,7 +18,7 @@ import 'package:maize/colors.dart';
 part 'Drawer/drawer_widget.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   static Page page() => const MaterialPage<void>(child: HomePage());
 

@@ -7,6 +7,7 @@ class _RoundedIconButton extends StatelessWidget {
     this.iconColor,
     this.iconSize = 24.0,
     required this.icon,
+    // ignore: unused_element
     this.padding,
   });
 

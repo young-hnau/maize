@@ -6,7 +6,7 @@ import 'package:maize/app/app_bloc.dart';
 import 'package:maize/colors.dart';
 
 class ProvideURIPage extends StatelessWidget {
-  const ProvideURIPage({Key? key}) : super(key: key);
+  const ProvideURIPage({super.key});
 
   static Page page() => const MaterialPage<void>(child: ProvideURIPage());
 
@@ -21,9 +21,7 @@ class ProvideURIPage extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({
-    super.key,
-  });
+  const _Card();
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +100,7 @@ class _MealieLogo extends StatelessWidget {
 }
 
 class _CardBody extends StatelessWidget {
-  const _CardBody({Key? key}) : super(key: key);
+  const _CardBody();
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +181,6 @@ class _EnterURI extends StatelessWidget {
 
 class _SubmitButton extends StatelessWidget {
   const _SubmitButton({
-    super.key,
     required this.tfController,
     required this.onTap,
     required this.text,
