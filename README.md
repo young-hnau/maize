@@ -1,13 +1,8 @@
 <!-- PROJECT LOGO -->
 <br />
-<style>
-.icon {
-    border-radius: 10%;
-}
-</style>
 <p align="center">
   <a href="https://github.com/young-hnau/maize">
-<img class="icon" style="width:200px;height:200px" viewBox="0 0 24 24" src="assets/maize_logo.png">
+<img style="width:200px;height:200px" viewBox="0 0 24 24" src="assets/maize_logo.png">
 </img>
   </a>
 
