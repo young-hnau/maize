@@ -36,7 +36,7 @@ class ManualWidget extends StatelessWidget {
                   const Text(
                       "Create a recipe by providing the name. All recipes must have unique names."),
                   const SizedBox(height: 10),
-                  _RecipeURLTextFormField(
+                  _RecipeManualTextFormField(
                     manualCubit: context.read<ManualCubit>(),
                   ),
                   const SizedBox(height: 20),
@@ -90,8 +90,8 @@ class ManualWidget extends StatelessWidget {
   }
 }
 
-class _RecipeURLTextFormField extends StatelessWidget {
-  const _RecipeURLTextFormField({
+class _RecipeManualTextFormField extends StatelessWidget {
+  const _RecipeManualTextFormField({
     required this.manualCubit,
   });
 
@@ -106,7 +106,6 @@ class _RecipeURLTextFormField extends StatelessWidget {
           return TextFormField(
             controller: manualCubit.state.textEditingController,
             autocorrect: false,
-            keyboardType: TextInputType.url,
             onFieldSubmitted: (_) => manualCubit.create(),
             decoration: InputDecoration(
               prefixIcon: Padding(
