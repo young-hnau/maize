@@ -152,6 +152,7 @@ class _EnterURI extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: TextField(
               controller: tfController,
+              keyboardType: TextInputType.url,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lan),
                 hintText: "https://mealie.example.com",
