@@ -47,9 +47,9 @@ class RecipeCubit extends Cubit<RecipeState> {
         throw Exception("An unknown error occuried while getting recipes");
       }
 
-      Rating rating = ratings
+      Rating? rating = ratings
           .where((element) => element.recipeId == state.recipe!.id)
-          .first;
+          .firstOrNull;
 
       emit(state.copyWith(
         userRating: rating,
