@@ -13,7 +13,7 @@ class Rating extends Equatable {
   final String recipeId;
   final String userId;
   final bool isFavorite;
-  final double rating;
+  final double? rating;
 
   static Rating? fromData({Map<String, dynamic>? data}) {
     if (data == null) return null;
@@ -32,7 +32,7 @@ class Rating extends Equatable {
     json['recipeId'] = this.recipeId;
     json['userId'] = this.userId;
     json['isFavorite'] = this.isFavorite;
-    json['rating'] = this.rating;
+    if (this.rating != null) json['rating'] = this.rating;
     return json;
   }
 
