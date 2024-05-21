@@ -7,8 +7,8 @@ import 'package:mealie_repository/mealie_repository.dart';
 
 part 'shopping_lists_state.dart';
 
-class ShoppingListsCubit extends Cubit<ShoppingListsState> {
-  ShoppingListsCubit({required this.appBloc})
+class RecipeCubit extends Cubit<ShoppingListsState> {
+  RecipeCubit({required this.appBloc})
       : super(const ShoppingListsState(
           status: ShoppingListsStatus.unintialized,
         )) {
@@ -20,8 +20,8 @@ class ShoppingListsCubit extends Cubit<ShoppingListsState> {
   Future<void> getShoppingLists() async {
     emit(state.copyWith(status: ShoppingListsStatus.loading));
 
-    List<ShoppingList>? shoppingLists = await appBloc.repo
-        .getAllShoppingLists(token: appBloc.state.user.refreshToken);
+    List<ShoppingList>? shoppingLists =
+        await appBloc.repo.getAllShoppingLists();
 
     emit(state.copyWith(
       status: ShoppingListsStatus.loaded,

@@ -215,9 +215,9 @@ class MealieRepository {
     return user;
   }
 
-  Future<List<ShoppingList>?> getAllShoppingLists(
-      {required String token}) async {
-    final String? refreshToken = await _getRefreshToken(token: token);
+  Future<List<ShoppingList>?> getAllShoppingLists() async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
 
     final Uri uri = this.uri.replace(path: '/api/groups/shopping/lists');
     final Options options =
