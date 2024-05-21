@@ -10,10 +10,10 @@ class RecipeReference extends Equatable {
   });
 
   final String id;
-  final String shoppingListId;
+  final String? shoppingListId;
   final String recipeId;
   final double recipeQuantity;
-  final Recipe recipe;
+  final Recipe? recipe;
 
   static RecipeReference? fromData({Map<String, dynamic>? data}) {
     if (data == null) return null;
@@ -105,7 +105,8 @@ class Recipe extends Equatable {
   final bool? isOcrRecipe;
   final List<Comment>? comments;
 
-  static Recipe fromData({required Map<String, dynamic> data}) {
+  static Recipe? fromData({required Map<String, dynamic>? data}) {
+    if (data == null) return null;
     final List<RecipeCategory> recipeCategory = List<RecipeCategory>.from(
         data['recipeCategory']?.map((dynamic category) =>
                 RecipeCategory.fromData(data: category)) ??

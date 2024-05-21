@@ -454,7 +454,8 @@ class MealieRepository {
       final Response response = await dio.getUri(uri, options: options);
       recipes = [];
       for (dynamic item in response.data['items']) {
-        recipes.add(Recipe.fromData(data: item));
+        Recipe? recipe = Recipe.fromData(data: item);
+        if (recipe != null) recipes.add(recipe);
       }
     } on DioException catch (err) {
       if (err.response != null) {

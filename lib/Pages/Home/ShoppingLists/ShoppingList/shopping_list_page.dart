@@ -492,49 +492,49 @@ class _ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: SizedBox(
-        height: 40,
-        child: Stack(
-          children: [
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Checkbox(value: item.checked, onChanged: (_) => onChecked()),
-                  const SizedBox(width: 10),
-                  Text(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Stack(
+        children: [
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(value: item.checked, onChanged: (_) => onChecked()),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
                     item.note,
                     style: const TextStyle(
                         fontWeight: FontWeight.w500, fontSize: 16),
                   ),
-                  if (item.quantity > 1) const SizedBox(width: 10),
-                  if (item.quantity > 1) Text("x${item.quantity}"),
-                  const Spacer(flex: 1),
-                  IconButton(
-                    onPressed: () => onDelete(),
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.black.withOpacity(0.5),
+                ),
+                if (item.quantity > 1) const SizedBox(width: 10),
+                if (item.quantity > 1) Text("x${item.quantity}"),
+                const Spacer(flex: 1),
+                IconButton(
+                  onPressed: () => onDelete(),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                const SizedBox(width: 10),
+              ],
+            ),
+          ),
+          item.checked
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      height: 1,
+                      color: Colors.grey,
                     ),
                   ),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-            item.checked
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: Container(
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  )
-                : Container(),
-          ],
-        ),
+                )
+              : Container(),
+        ],
       ),
     );
   }

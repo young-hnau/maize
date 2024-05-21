@@ -37,7 +37,7 @@ class ShoppingListItem extends Equatable {
   final Food? food;
   final Label? label;
   final Unit? unit;
-  final RecipeReference? recipeReferences;
+  final List<RecipeReference?>? recipeReferences;
   final String? createdAt;
   final String? updateAt;
 
@@ -72,7 +72,7 @@ class ShoppingListItem extends Equatable {
     Food? food,
     Label? label,
     Unit? unit,
-    RecipeReference? recipeReferences,
+    List<RecipeReference?>? recipeReferences,
     String? createdAt,
     String? updateAt,
   }) {
@@ -116,7 +116,10 @@ class ShoppingListItem extends Equatable {
       food: Food.fromData(data: data['food']),
       label: Label.fromData(data: data['label']),
       unit: Unit.fromData(data: data['unit']),
-      recipeReferences: RecipeReference.fromData(data: data['recipeReference']),
+      recipeReferences: List<RecipeReference?>.generate(
+          data['recipeReferences'].length,
+          (int index) =>
+              RecipeReference.fromData(data: data['recipeReferences'][index])),
       createdAt: data['createdAt'],
       updateAt: data['updateAt'],
     );
