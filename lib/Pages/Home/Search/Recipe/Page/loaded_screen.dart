@@ -163,9 +163,17 @@ class _LoadedScreen extends StatelessWidget {
                     color: Colors.black.withOpacity(0.7),
                   ),
                 ),
-                IconButton(
-                    onPressed: () => recipeCubit.copyIngredientsToClipboard(),
-                    icon: const Icon(Icons.copy))
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () => recipeCubit.createOverlay(context),
+                        icon: const Icon(Icons.add_shopping_cart)),
+                    IconButton(
+                        onPressed: () =>
+                            recipeCubit.copyIngredientsToClipboard(),
+                        icon: const Icon(Icons.copy)),
+                  ],
+                )
               ],
             ),
           ),

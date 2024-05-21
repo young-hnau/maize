@@ -14,7 +14,7 @@ class CreateShoppingListCubit extends Cubit<CreateShoppingListState> {
         ));
 
   final AppBloc appBloc;
-  final ShoppingListsCubit shoppingListCubit;
+  final RecipeCubit shoppingListCubit;
 
   Future<void> createList({
     required String name,

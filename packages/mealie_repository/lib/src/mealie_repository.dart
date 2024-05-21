@@ -378,6 +378,40 @@ class MealieRepository {
     }
   }
 
+  Future<void> addRecipeIngredientsToShoppingList({
+    required Recipe recipe,
+    required ShoppingList shoppingList,
+    int? recipeIncrementQuantity,
+  }) async {
+    if (recipe.recipeIngredient == null) return;
+
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Uri uri = this.uri.replace(
+        path:
+            '/api/groups/shopping/lists/${shoppingList.id}/recipe/${recipe.id}');
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+    final Map<String, dynamic> data = {
+      'recipeIncrementQuantity': recipeIncrementQuantity ?? 1,
+      'recipeIngredients':
+          recipe.recipeIngredient!.map((Ingredient i) => i.toJson()).toList()
+    };
+
+    try {
+      await dio.postUri(uri, options: options, data: data);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        this.errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        this.errorStream.add(err.message.toString());
+      }
+    }
+  }
+
   Future<List<Recipe>?> getAllRecipes({
     int? page,
     int? perPage,
