@@ -12,7 +12,9 @@ class SearchState extends Equatable {
     this.updateAt,
     this.searchQuery,
     this.favorites,
-  }) : pagingController = PagingController<int, Recipe>(firstPageKey: 1);
+    PagingController<int, Recipe>? pagingController,
+  }) : pagingController =
+            pagingController ?? PagingController<int, Recipe>(firstPageKey: 1);
 
   final SearchStatus status;
   final String? errorMessage;
@@ -35,6 +37,7 @@ class SearchState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       updateAt: updateAt ?? this.updateAt,
+      pagingController: pagingController,
       searchQuery: searchQuery ?? this.searchQuery,
       favorites: favorites ?? this.favorites,
     );
