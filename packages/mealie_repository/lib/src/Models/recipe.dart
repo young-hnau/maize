@@ -22,7 +22,7 @@ class RecipeReference extends Equatable {
       shoppingListId: data['shoppingListId'],
       recipeId: data['recipeId'],
       recipeQuantity: data['recipeQuantity'],
-      recipe: data['recipe'],
+      recipe: Recipe.fromData(data: data['recipe']),
     );
   }
 
