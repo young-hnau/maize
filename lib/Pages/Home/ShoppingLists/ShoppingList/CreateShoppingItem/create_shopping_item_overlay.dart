@@ -16,30 +16,33 @@ class CreateShoppingItemOverlay extends OverlayEntry {
                 TextEditingController();
             final TextEditingController quantityTFController =
                 TextEditingController();
-            return Material(
-              color: Colors.black.withOpacity(0.2),
-              child: BlocProvider(
-                create: (_) => CreateShoppingItemCubit(
-                  appBloc: context.read<AppBloc>(),
-                ),
-                child: BlocBuilder<CreateShoppingItemCubit,
-                    CreateShoppingItemState>(
-                  builder: (context, state) {
-                    switch (state.status) {
-                      case CreateShoppingItemStatus.ready:
-                        return _LoadedScreen(
-                          createShoppingListCubit:
-                              context.read<CreateShoppingItemCubit>(),
-                          shoppingList: shoppingList,
-                          shoppingListCubit: shoppingListCubit,
-                          noteTFController: noteTFController,
-                          quantityTFController: quantityTFController,
-                        );
-                      default:
-                        return _ErrorScreen(
-                            cubit: context.read<CreateShoppingItemCubit>());
-                    }
-                  },
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Material(
+                color: Colors.black.withOpacity(0.2),
+                child: BlocProvider(
+                  create: (_) => CreateShoppingItemCubit(
+                    appBloc: context.read<AppBloc>(),
+                  ),
+                  child: BlocBuilder<CreateShoppingItemCubit,
+                      CreateShoppingItemState>(
+                    builder: (context, state) {
+                      switch (state.status) {
+                        case CreateShoppingItemStatus.ready:
+                          return _LoadedScreen(
+                            createShoppingListCubit:
+                                context.read<CreateShoppingItemCubit>(),
+                            shoppingList: shoppingList,
+                            shoppingListCubit: shoppingListCubit,
+                            noteTFController: noteTFController,
+                            quantityTFController: quantityTFController,
+                          );
+                        default:
+                          return _ErrorScreen(
+                              cubit: context.read<CreateShoppingItemCubit>());
+                      }
+                    },
+                  ),
                 ),
               ),
             );
