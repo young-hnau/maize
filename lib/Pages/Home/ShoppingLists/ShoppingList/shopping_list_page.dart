@@ -18,31 +18,33 @@ class ShoppingListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-      return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-        return BlocProvider(
-          create: (_) => ShoppingListCubit(
-              appBloc: context.read<AppBloc>(), shoppingList: shoppingList),
-          child: BlocBuilder<ShoppingListCubit, ShoppingListState>(
-            builder: (context, state) {
-              switch (state.status) {
-                case ShoppingListStatus.loaded:
-                  return _LoadedScreen(
-                    shoppingListCubit: context.read<ShoppingListCubit>(),
-                    homeCubit: context.read<HomeCubit>(),
-                  );
-                case ShoppingListStatus.unintialized:
-                case ShoppingListStatus.loading:
-                  return const _LoadingScreen();
-                case ShoppingListStatus.error:
-                default:
-                  return _ErrorScreen(state: state);
-              }
-            },
-          ),
-        );
-      });
-    });
+    return Scaffold(
+      body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+        return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+          return BlocProvider(
+            create: (_) => ShoppingListCubit(
+                appBloc: context.read<AppBloc>(), shoppingList: shoppingList),
+            child: BlocBuilder<ShoppingListCubit, ShoppingListState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case ShoppingListStatus.loaded:
+                    return _LoadedScreen(
+                      shoppingListCubit: context.read<ShoppingListCubit>(),
+                      homeCubit: context.read<HomeCubit>(),
+                    );
+                  case ShoppingListStatus.unintialized:
+                  case ShoppingListStatus.loading:
+                    return const _LoadingScreen();
+                  case ShoppingListStatus.error:
+                  default:
+                    return _ErrorScreen(state: state);
+                }
+              },
+            ),
+          );
+        });
+      }),
+    );
   }
 }
 
@@ -121,7 +123,7 @@ class _LoadedScreen extends StatelessWidget {
         RefreshIndicator(
           onRefresh: () => shoppingListCubit.getShoppingList(),
           child: ListView(
-            shrinkWrap: true,
+            shrinkWrap: false,
             children: [
               const SizedBox(height: 20),
               SizedBox(
@@ -129,12 +131,9 @@ class _LoadedScreen extends StatelessWidget {
                 child: SvgPicture.asset('assets/empty_cart.svg'),
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  height: 1,
-                  color: Colors.grey[300],
-                ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+                child: Divider(),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -211,12 +210,15 @@ class _LoadedScreen extends StatelessWidget {
             ],
           ),
         ),
-        Align(
-            alignment: Alignment.bottomRight,
-            child: _BottomButtons(
-              shoppingListCubit: shoppingListCubit,
-              homeCubit: homeCubit,
-            )),
+        shoppingListCubit.state.keyboardVisibilityController.isVisible
+            ? Container()
+            : Align(
+                alignment: Alignment.bottomRight,
+                child: _BottomButtons(
+                  shoppingListCubit: shoppingListCubit,
+                  homeCubit: homeCubit,
+                ),
+              ),
       ],
     );
   }
@@ -501,8 +503,8 @@ class _ItemTile extends StatelessWidget {
               children: [
                 Checkbox(value: item.checked, onChanged: (_) => onChecked()),
                 const SizedBox(width: 10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                Expanded(
+                  flex: 999,
                   child: Text(
                     item.note,
                     style: const TextStyle(
@@ -523,17 +525,6 @@ class _ItemTile extends StatelessWidget {
               ],
             ),
           ),
-          item.checked
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Container(
-                      height: 1,
-                      color: Colors.grey,
-                    ),
-                  ),
-                )
-              : Container(),
         ],
       ),
     );

@@ -8,13 +8,14 @@ enum ShoppingListStatus {
 }
 
 class ShoppingListState extends Equatable {
-  const ShoppingListState({
+  ShoppingListState({
     required this.status,
     this.uri,
     this.errorMessage,
     this.shoppingList,
     this.showChecked = false,
     this.overlayEntry,
+    this.currentlyEditingIndex,
   });
 
   final ShoppingListStatus status;
@@ -23,6 +24,9 @@ class ShoppingListState extends Equatable {
   final ShoppingList? shoppingList;
   final bool showChecked;
   final OverlayEntry? overlayEntry;
+  final KeyboardVisibilityController keyboardVisibilityController =
+      KeyboardVisibilityController();
+  final int? currentlyEditingIndex;
 
   ShoppingListState copyWith({
     required ShoppingListStatus status,
@@ -31,6 +35,7 @@ class ShoppingListState extends Equatable {
     ShoppingList? shoppingList,
     bool? showChecked,
     OverlayEntry? overlayEntry,
+    int? currentlyEditingIndex,
   }) {
     return ShoppingListState(
       status: status,
@@ -39,6 +44,8 @@ class ShoppingListState extends Equatable {
       shoppingList: shoppingList ?? this.shoppingList,
       showChecked: showChecked ?? this.showChecked,
       overlayEntry: overlayEntry ?? this.overlayEntry,
+      currentlyEditingIndex:
+          currentlyEditingIndex ?? this.currentlyEditingIndex,
     );
   }
 
@@ -51,5 +58,6 @@ class ShoppingListState extends Equatable {
         showChecked,
         overlayEntry,
         shoppingList?.items?.map((e) => e.checked),
+        currentlyEditingIndex,
       ];
 }
