@@ -10,6 +10,7 @@
 .history
 .svn/
 migrate_working_dir/
+*.log*
 
 # IntelliJ related
 *.iml
@@ -72,3 +73,4 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+

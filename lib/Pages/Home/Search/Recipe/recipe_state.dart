@@ -32,11 +32,11 @@ class RecipeState extends Equatable {
   final OverlayEntry? overlayEntry;
 
   List<String>? get checkedIngredients => _checkedIngredients != null
-      ? List<String>.from(_checkedIngredients!)
+      ? List<String>.from(_checkedIngredients)
       : null;
 
   List<String>? get checkedInstructions => _checkedInstructions != null
-      ? List<String>.from(_checkedInstructions!)
+      ? List<String>.from(_checkedInstructions)
       : null;
 
   Recipe? get editingRecipe => _editingRecipe ?? Recipe.from(recipe);
