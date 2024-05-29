@@ -50,3 +50,12 @@ class UserLoggedIn extends AppEvent {
   @override
   List<Object?> get props => [token];
 }
+
+class MealieURIUpdated extends AppEvent {
+  const MealieURIUpdated({required this.uri});
+
+  final Uri uri;
+
+  @override
+  List<Object?> get props => [uri];
+}

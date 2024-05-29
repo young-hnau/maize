@@ -6,22 +6,24 @@ import 'package:maize/app/app_bloc.dart';
 import 'package:maize/colors.dart';
 
 class ProvideURIPage extends StatelessWidget {
-  const ProvideURIPage({super.key});
+  ProvideURIPage({super.key});
 
-  static Page page() => const MaterialPage<void>(child: ProvideURIPage());
+  static Page page() => MaterialPage<void>(child: ProvideURIPage());
+  final TextEditingController tfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
-      body: const _Card(),
+      body: _Card(tfController: tfController),
     );
   }
 }
 
 class _Card extends StatelessWidget {
-  const _Card();
+  const _Card({required this.tfController});
+  final TextEditingController tfController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +31,17 @@ class _Card extends StatelessWidget {
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.8,
         width: MediaQuery.of(context).size.width * 0.95,
-        child: const Card(
+        child: Card(
+          clipBehavior: Clip.antiAlias,
           elevation: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _MealieBanner(),
-              SizedBox(height: 50),
-              _MealieLogo(),
-              SizedBox(height: 25),
-              _CardBody(),
+              const _MealieBanner(),
+              const SizedBox(height: 50),
+              const _MealieLogo(),
+              const SizedBox(height: 25),
+              _CardBody(tfController: tfController),
             ],
           ),
         ),
@@ -100,7 +103,8 @@ class _MealieLogo extends StatelessWidget {
 }
 
 class _CardBody extends StatelessWidget {
-  const _CardBody();
+  const _CardBody({required this.tfController});
+  final TextEditingController tfController;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +123,7 @@ class _CardBody extends StatelessWidget {
                   return const _Loading();
                 case ProvideURIStatus.ready:
                 default:
-                  return const _EnterURI();
+                  return _EnterURI(tfController: tfController);
               }
             }),
       );
@@ -128,11 +132,13 @@ class _CardBody extends StatelessWidget {
 }
 
 class _EnterURI extends StatelessWidget {
-  const _EnterURI();
+  const _EnterURI({
+    required this.tfController,
+  });
+  final TextEditingController tfController;
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController tfController = TextEditingController();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

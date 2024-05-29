@@ -12,6 +12,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppLogoutRequested>(_logout);
     on<AppUserChanged>(_appUserChanged);
     on<UserLoggedIn>(_userLoggedIn);
+    on<MealieURIUpdated>(_updateMealieRepoURI);
 
     add(const AppStarted());
   }
@@ -73,8 +74,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(status: AppStatus.authenticated, user: event.user));
   }
 
+  Future<void> _updateMealieRepoURI(
+      MealieURIUpdated event, Emitter<AppState> emit) async {
+    emit(state.copyWith(
+        mealieRepository: state._mealieRepository.copyWith(uri: event.uri)));
+  }
+
   void refreshApp() {
     add(const AppStarted());
+  }
+
+  void updateMealieRepoURI(Uri uri) {
+    add(MealieURIUpdated(uri: uri));
   }
 
   /// Returns an instance of MealieRepository with the most up to date token data

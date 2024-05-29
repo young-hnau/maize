@@ -27,26 +27,43 @@ class MealieRepository {
   MealieRepository({
     required this.uri,
     this.user,
-  });
+    StreamController<bool>? authenticated,
+    StreamController<String>? refreshToken,
+    StreamController<String?>? errorStream,
+  })  : authenticated = authenticated ?? StreamController<bool>(),
+        refreshToken = refreshToken ?? StreamController<String>.broadcast(),
+        errorStream = errorStream ?? StreamController<String>.broadcast();
 
   final Uri uri;
   final Dio dio = Dio();
-  final StreamController authenticated = StreamController<bool>();
-  final StreamController refreshToken = StreamController<String>.broadcast();
-  final StreamController errorStream = StreamController<String>.broadcast();
+  final StreamController<bool> authenticated;
+  final StreamController<String> refreshToken;
+  final StreamController<String?> errorStream;
   final User? user;
 
   MealieRepository copyWith({User? user, Uri? uri}) {
     return MealieRepository(
       uri: uri ?? this.uri,
       user: user ?? this.user,
+      authenticated: this.authenticated,
+      refreshToken: this.refreshToken,
+      errorStream: this.errorStream,
     );
   }
 
+  /// Verifies that the current MealieRepository URI is valid
+  /// and optionally saves it to device for future.
+  ///
+  /// Input:
+  /// - save: will save URI to on device storage
+  ///
+  /// Returns:
+  /// - bool: true if URI is a valid Mealie Instance uri
   Future<bool> uriIsValid({bool save = false}) async {
     final Uri uri = this.uri.replace(path: "/api/app/about");
     try {
-      final Response response = await dio.getUri(uri);
+      final Response response = await dio.getUri(uri,
+          options: Options(sendTimeout: Duration(seconds: 20)));
       if (response.statusCode == 200) {
         if (save) {
           final SharedPreferences p = await SharedPreferences.getInstance();
@@ -56,9 +73,11 @@ class MealieRepository {
       } else {
         return false;
       }
-    } on DioException {
+    } on DioException catch (e) {
+      if (e.message != null) this.errorStream.add(e.message);
       return false;
-    } on SocketException {
+    } on SocketException catch (e) {
+      this.errorStream.add(e.message);
       return false;
     }
   }
@@ -144,6 +163,9 @@ class MealieRepository {
 
       Response response = await dio.getUri(uri, options: options);
       refreshToken = response.data['access_token'];
+      if (refreshToken == null) {
+        throw Exception();
+      }
       this.refreshToken.add(refreshToken);
     } on DioException {
       // Refresh token has expired, try the access token
@@ -158,9 +180,14 @@ class MealieRepository {
 
         Response response = await dio.getUri(uri, options: options);
         refreshToken = response.data['access_token'];
+        if (refreshToken == null) {
+          throw Exception();
+        }
         this.refreshToken.add(refreshToken);
       } on DioException {
         // Both refresh token and access token have expired
+        this.authenticated.add(false);
+      } on Exception {
         this.authenticated.add(false);
       }
     }
