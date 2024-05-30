@@ -43,6 +43,7 @@ class ShoppingListItem extends Equatable {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
+    json['id'] = this.id;
     json['shoppingListId'] = this.shoppingListId;
     json['checked'] = this.checked;
     if (this.position != null) json['position'] = this.position;

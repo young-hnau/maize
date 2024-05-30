@@ -514,6 +514,13 @@ class _ItemTile extends StatelessWidget {
                 if (item.quantity > 1) const SizedBox(width: 10),
                 if (item.quantity > 1) Text("x${item.quantity}"),
                 const Spacer(flex: 1),
+                (item.recipeReferences != null &&
+                        item.recipeReferences!.isNotEmpty)
+                    ? Icon(
+                        FontAwesomeIcons.kitchenSet,
+                        color: Colors.black.withOpacity(0.5),
+                      )
+                    : Container(),
                 IconButton(
                   onPressed: () => onDelete(),
                   icon: Icon(
