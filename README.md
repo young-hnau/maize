@@ -21,9 +21,15 @@ Maize is a sleek and modern [Mealie](https://github.com/mealie-recipes/mealie) c
 - Explore and manage your recipes and shopping lists
 - Create new recipes manually or from URLs that are supported by Mealie
 
+## Warning
+
+**_This is alpha software and as such may contain bugs! We are not responsible for any lost data. Make sure you have backups before using this application_**
+
 ## Download
 
-Currently only in Alpha Release stage, links will be added when a complete version becomes available
+Currently only an [alpha release](https://github.com/young-hnau/maize/releases/latest) is available. See how to sideload it below.
+
+Direct links to official app stores will be added here when a stable release becomes available.
 
 ## Roadmap
 
@@ -52,13 +58,19 @@ A list of features that I would love to have implemented for a V2 release:
 
 ## Screenshots
 
-To be added...
+| Search                                                                     | Recipe Ingredients                                                                     | Recipe Instructions                                                                     | Shopping List                                                             |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| <img src="assets/screenshots/ss_1.png?raw=true" alt="Search" width="200"/> | <img src="assets/screenshots/ss_2.png?raw=true" alt="Recipe-Ingredients" width="200"/> | <img src="assets/screenshots/ss_3.png?raw=true" alt="Recipe-Instrucitons" width="200"/> | <img src="assets/screenshots/ss_4.png" alt="Shopping List" width="200"/>  |
+| Search                                                                     | User Favorites                                                                         | Recipe Creation                                                                         | Authentication                                                            |
+| <img src="assets/screenshots/ss_5.png?raw=true" alt="Search" width="200"/> | <img src="assets/screenshots/ss_6.png?raw=true" alt="Album" width="200"/>              | <img src="assets/screenshots/ss_7.png?raw=true" alt="Player" width="200"/>              | <img src="assets/screenshots/ss_8.png?raw=true" alt="Queue" width="200"/> |
 
 ## Sideload
 
 **Pre built binaries**
 
-To be added...
+Grab the [latest release](https://github.com/young-hnau/maize/releases/latest) and install it using your favorite tool like [SideStore](https://sidestore.io).
+
+Stripping app extensions is highly recommended, they will not work as intended.
 
 **Build the app yourself**
 
