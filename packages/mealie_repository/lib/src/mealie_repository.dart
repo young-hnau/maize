@@ -32,7 +32,7 @@ class MealieRepository {
     StreamController<String?>? errorStream,
   })  : authenticated = authenticated ?? StreamController<bool>(),
         refreshToken = refreshToken ?? StreamController<String>.broadcast(),
-        errorStream = errorStream ?? StreamController<String>.broadcast();
+        errorStream = errorStream ?? StreamController<String?>.broadcast();
 
   final Uri uri;
   final Dio dio = Dio();
@@ -232,10 +232,10 @@ class MealieRepository {
       user = User.fromMealieResponse(
           data: response.data, refreshToken: refreshToken);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -258,10 +258,10 @@ class MealieRepository {
         shoppingLists.add(ShoppingList.fromdata(data: item));
       }
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -282,10 +282,10 @@ class MealieRepository {
       final Response response = await dio.getUri(uri, options: options);
       shoppingList = ShoppingList.fromdata(data: response.data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -309,10 +309,10 @@ class MealieRepository {
           await dio.postUri(uri, options: options, data: data);
       shoppingList = ShoppingList.fromdata(data: response.data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -330,10 +330,10 @@ class MealieRepository {
     try {
       await dio.deleteUri(uri, options: options);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -354,10 +354,10 @@ class MealieRepository {
       final Map<String, dynamic> data = item.toJson();
       await dio.putUri(uri, options: options, data: data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
   }
@@ -375,10 +375,10 @@ class MealieRepository {
     try {
       await dio.deleteUri(uri, options: options);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
   }
@@ -397,10 +397,10 @@ class MealieRepository {
     try {
       await dio.postUri(uri, options: options, data: item.toJson());
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
   }
@@ -431,10 +431,10 @@ class MealieRepository {
     try {
       await dio.postUri(uri, options: options, data: data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
   }
@@ -485,10 +485,10 @@ class MealieRepository {
         if (recipe != null) recipes.add(recipe);
       }
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -512,10 +512,10 @@ class MealieRepository {
       final Response response = await dio.getUri(uri, options: options);
       recipe = Recipe.fromData(data: response.data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
 
@@ -534,10 +534,10 @@ class MealieRepository {
       final Map<String, dynamic> data = recipe.toJson();
       await dio.putUri(uri, options: options, data: data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
   }
@@ -613,10 +613,10 @@ class MealieRepository {
       Response response = await dio.postUri(uri, options: options, data: data);
       return response.data;
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return null;
@@ -641,10 +641,10 @@ class MealieRepository {
       Response response = await dio.postUri(uri, options: options, data: data);
       return response.data;
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return null;
@@ -665,10 +665,10 @@ class MealieRepository {
       await dio.deleteUri(uri, options: options);
       return;
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return null;
@@ -699,10 +699,10 @@ class MealieRepository {
         favorites.add(Favorites.fromData(data: recipe));
       }
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return favorites;
@@ -732,10 +732,10 @@ class MealieRepository {
         recipes.add(recipe);
       }
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return recipes;
@@ -759,10 +759,10 @@ class MealieRepository {
     try {
       await dio.postUri(uri, options: options);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return;
@@ -786,10 +786,10 @@ class MealieRepository {
     try {
       await dio.deleteUri(uri, options: options);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return;
@@ -815,10 +815,10 @@ class MealieRepository {
     try {
       await dio.postUri(uri, options: options, data: data);
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return;
@@ -849,10 +849,10 @@ class MealieRepository {
       }
       return ratings;
     } on DioException catch (err) {
-      if (err.response != null) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
-        this.errorStream.add(err.message.toString());
+        this.errorStream.add(err.message);
       }
     }
     return null;

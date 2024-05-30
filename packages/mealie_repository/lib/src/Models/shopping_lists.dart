@@ -53,8 +53,14 @@ class ShoppingListItem extends Equatable {
     if (this.labelId != null) json['labelId'] = this.labelId;
     if (this.unitId != null) json['unitId'] = this.unitId;
     if (this.extras != null) json['extras'] = this.extras;
-    if (this.recipeReferences != null)
-      json['recipeReferences'] = this.recipeReferences;
+    if (this.recipeReferences != null && recipeReferences!.length > 0)
+      json['recipeReferences'] =
+          List.generate(recipeReferences!.length, (int index) {
+        RecipeReference? recipeReference = recipeReferences![index];
+        if (recipeReference != null) {
+          return recipeReference.toJson();
+        }
+      });
     return json;
   }
 

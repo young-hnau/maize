@@ -22,12 +22,12 @@ class HomeCubit extends Cubit<HomeState> {
     appBloc.repo.errorStream.stream.listen((message) {
       emit(state.copyWith(
         status: HomeStatus.error,
-        errorMessage: message.toString(),
+        errorMessage: message,
       ));
     });
   }
 
-  void setScreen(Widget screen) {
-    emit(state.copyWith(status: state.status, onScreen: screen));
+  void setScreen(Widget screen, {HomeStatus? status}) {
+    emit(state.copyWith(status: status ?? state.status, onScreen: screen));
   }
 }

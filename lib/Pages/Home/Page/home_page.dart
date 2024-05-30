@@ -24,34 +24,36 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(builder: (context, snapshot) {
-      return BlocProvider(
-        create: (_) =>
-            HomeCubit(appBloc: context.read<AppBloc>(), context: context),
-        child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-          switch (state.status) {
-            case HomeStatus.error:
-              return _ErrorScreen(state: state);
-            case HomeStatus.ready:
-            case HomeStatus.loading:
-            default:
-              return Scaffold(
-                resizeToAvoidBottomInset: false,
-                appBar: _AppBar(
-                  appBloc: context.read<AppBloc>(),
-                  homeCubit: context.read<HomeCubit>(),
-                ),
-                drawer: _Drawer(
-                  appBloc: context.read<AppBloc>(),
-                  homeCubit: context.read<HomeCubit>(),
-                  context: context,
-                ),
-                body: state.onScreen,
-              );
-          }
-        }),
-      );
-    });
+    return Scaffold(
+      body: BlocBuilder<AppBloc, AppState>(builder: (context, snapshot) {
+        return BlocProvider(
+          create: (_) =>
+              HomeCubit(appBloc: context.read<AppBloc>(), context: context),
+          child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+            switch (state.status) {
+              case HomeStatus.error:
+                return _ErrorScreen(state: state);
+              case HomeStatus.ready:
+              case HomeStatus.loading:
+              default:
+                return Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  appBar: _AppBar(
+                    appBloc: context.read<AppBloc>(),
+                    homeCubit: context.read<HomeCubit>(),
+                  ),
+                  drawer: _Drawer(
+                    appBloc: context.read<AppBloc>(),
+                    homeCubit: context.read<HomeCubit>(),
+                    context: context,
+                  ),
+                  body: state.onScreen,
+                );
+            }
+          }),
+        );
+      }),
+    );
   }
 }
 
@@ -106,16 +108,40 @@ class _ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Error",
-            style: TextStyle(fontSize: 25),
-          ),
-          const SizedBox(height: 15),
-          Text(state.errorMessage.toString())
-        ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Error",
+              style: TextStyle(fontSize: 25),
+            ),
+            const SizedBox(height: 15),
+            Text(state.errorMessage ?? "An un-specified error was encountered"),
+            const SizedBox(height: 15),
+            SizedBox(
+              width: 160,
+              child: TextButton(
+                onPressed: () => context
+                    .read<HomeCubit>()
+                    .setScreen(SearchPage(), status: HomeStatus.ready),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                      color: MealieColors.orange,
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  child: const Center(
+                    child: Text(
+                      "Go Home",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -24,20 +24,20 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
 
   Future<void> _initialize() async {
     state.keyboardVisibilityController.onChange.listen((bool visible) {
-      emit(state.copyWith(status: ShoppingListStatus.loading));
-      emit(state.copyWith(status: ShoppingListStatus.loaded));
+      safeEmit(state.copyWith(status: ShoppingListStatus.loading));
+      safeEmit(state.copyWith(status: ShoppingListStatus.loaded));
     });
     getShoppingList();
   }
 
   Future<void> getShoppingList() async {
-    emit(state.copyWith(status: ShoppingListStatus.loading));
+    safeEmit(state.copyWith(status: ShoppingListStatus.loading));
 
     ShoppingList? shoppingList =
         await appBloc.repo.getOneShoppingList(list: _shoppingList);
 
     if (shoppingList == null) {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         status: ShoppingListStatus.error,
         errorMessage:
             "An unknown error occured while getting the shopping list",
@@ -50,14 +50,15 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
         ?.sort((a, b) => a.note.toLowerCase().compareTo(b.note.toLowerCase()));
 
     shoppingList = shoppingList.copyWith(items: shoppingListItems);
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       status: ShoppingListStatus.loaded,
       shoppingList: shoppingList,
     ));
   }
 
   void toggleShowChecked() {
-    emit(state.copyWith(status: state.status, showChecked: !state.showChecked));
+    safeEmit(
+        state.copyWith(status: state.status, showChecked: !state.showChecked));
   }
 
   Future<void> checkItem(ShoppingListItem item) async {
@@ -85,7 +86,7 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
     ShoppingList shoppingList =
         state.shoppingList!.copyWith(items: shoppingListItems);
 
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       status: state.status,
       shoppingList: shoppingList,
       currentlyEditingIndex: i,
@@ -111,7 +112,7 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
 
   void removeOverlay() {
     state.overlayEntry!.remove();
-    emit(state.copyWith(status: state.status, overlayEntry: null));
+    safeEmit(state.copyWith(status: state.status, overlayEntry: null));
   }
 
   void createOverlay(BuildContext context) {
@@ -119,7 +120,7 @@ class ShoppingListCubit extends Cubit<ShoppingListState> {
         shoppingList: state.shoppingList!, shoppingListCubit: this);
     Overlay.of(context).insert(overlayEntry);
 
-    emit(state.copyWith(status: state.status, overlayEntry: overlayEntry));
+    safeEmit(state.copyWith(status: state.status, overlayEntry: overlayEntry));
   }
 
   Future<void> deleteCheckedItems() async {
