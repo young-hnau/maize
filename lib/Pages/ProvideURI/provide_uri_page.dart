@@ -164,12 +164,11 @@ class _EnterURI extends StatelessWidget {
                 hintText: "https://mealie.example.com",
                 border: InputBorder.none,
                 fillColor: Colors.grey[300],
-                // focusColor: MealieColors.orange,
-                // prefixIconColor: MealieColors.orange,
-                // iconColor: MealieColors.orange,
-                // hoverColor: MealieColors.orange,
                 filled: true,
               ),
+              onSubmitted: (_) => context
+                  .read<ProvideURICubit>()
+                  .verifyURI(tfController.value.text),
             ),
           ),
           const SizedBox(height: 15),
