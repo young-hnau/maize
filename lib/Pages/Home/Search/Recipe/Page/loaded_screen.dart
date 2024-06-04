@@ -309,54 +309,70 @@ class _LoadedScreen extends StatelessWidget {
               },
             ),
           ),
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Tags",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(height: 1, color: Colors.black.withOpacity(0.5)),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: 35,
-                    child: ListView.builder(
-                      physics: const ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: recipeCubit.state.recipe?.tags?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          decoration: const BoxDecoration(
-                            color: MealieColors.darkBlue,
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: Center(
-                            child: Text(
-                              recipeCubit.state.recipe?.tags?[index].name ?? "",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
+          recipeCubit.state.recipe?.tags != null &&
+                  recipeCubit.state.recipe!.tags!.isNotEmpty
+              ? _TagsCard(recipeCubit: recipeCubit)
+              : Container(),
+        ],
+      ),
+    );
+  }
+}
+
+class _TagsCard extends StatelessWidget {
+  const _TagsCard({
+    required this.recipeCubit,
+  });
+
+  final RecipeCubit recipeCubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Tags",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Container(height: 1, color: Colors.black.withOpacity(0.5)),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.75,
+              height: 35,
+              child: ListView.builder(
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: recipeCubit.state.recipe?.tags?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    decoration: const BoxDecoration(
+                      color: MealieColors.darkBlue,
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Center(
+                      child: Text(
+                        recipeCubit.state.recipe?.tags?[index].name ?? "",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
