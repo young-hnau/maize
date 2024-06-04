@@ -312,6 +312,8 @@ class _LoadedScreen extends StatelessWidget {
           recipe.tags != null && recipe.tags!.isNotEmpty
               ? _TagsCard(recipeCubit: recipeCubit)
               : Container(),
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16), child: Divider()),
           recipe.nutrition != null && recipe.settings?.showNutrition == true
               ? Card(
                   margin:
@@ -363,7 +365,31 @@ class _LoadedScreen extends StatelessWidget {
                     ),
                   ),
                 )
-              : Container()
+              : Container(),
+          recipe.orgURL != null
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    height: 35,
+                    padding: const EdgeInsets.all(0),
+                    decoration: const BoxDecoration(
+                      color: MealieColors.darkRed,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: TextButton(
+                      onPressed: () async {
+                        await launchUrl(Uri.parse(recipe.orgURL!));
+                      },
+                      child: const Text(
+                        "Original URL",
+                        style: TextStyle(color: Colors.white, fontSize: 11),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:maize/Pages/Home/Search/Recipe/recipe_cubit.dart';
 import 'package:maize/app/app_bloc.dart';
 import 'package:maize/colors.dart';
 import 'package:mealie_repository/mealie_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'editing_screen.dart';
 part 'loaded_screen.dart';
