@@ -3,11 +3,12 @@ part of '../mealie_repository.dart';
 class RecipeReference extends Equatable {
   RecipeReference({
     required this.id,
-    required this.shoppingListItemId,
+    this.shoppingListItemId,
     required this.recipeId,
     required this.recipeQuantity,
-    required this.recipeScale,
-    required this.recipeNote,
+    this.recipeScale,
+    this.recipeNote,
+    this.recipe,
   });
 
   final String id;
@@ -16,17 +17,18 @@ class RecipeReference extends Equatable {
   final double recipeQuantity;
   final double? recipeScale;
   final String? recipeNote;
+  final Recipe? recipe;
 
   static RecipeReference? fromData({Map<String, dynamic>? data}) {
     if (data == null) return null;
     return RecipeReference(
-      id: data['id'],
-      shoppingListItemId: data['shoppingListItemId'],
-      recipeId: data['recipeId'],
-      recipeQuantity: data['recipeQuantity'],
-      recipeScale: data['recipeScale'],
-      recipeNote: data['recipeNote'],
-    );
+        id: data['id'],
+        shoppingListItemId: data['shoppingListItemId'],
+        recipeId: data['recipeId'],
+        recipeQuantity: data['recipeQuantity'],
+        recipeScale: data['recipeScale'],
+        recipeNote: data['recipeNote'],
+        recipe: Recipe.fromData(data: data['recipe']));
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +40,7 @@ class RecipeReference extends Equatable {
     json['recipeQuantity'] = this.recipeQuantity;
     if (this.recipeScale != null) json['recipeScale'] = this.recipeScale;
     if (this.recipeNote != null) json['recipeNote'] = this.recipeNote;
+    if (this.recipe != null) json['recipe'] = this.recipe!.toJson();
     return json;
   }
 
@@ -49,6 +52,7 @@ class RecipeReference extends Equatable {
         recipeQuantity,
         recipeScale,
         recipeNote,
+        recipe,
       ];
 }
 

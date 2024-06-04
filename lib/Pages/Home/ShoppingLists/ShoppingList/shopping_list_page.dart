@@ -103,15 +103,15 @@ class _LoadedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ShoppingListItem> shoppingList =
+    List<ShoppingListItem> shoppingListItems =
         context.read<ShoppingListCubit>().state.shoppingList?.items ?? [];
-    List<ShoppingListItem> uncheckedItems = shoppingList
+    List<ShoppingListItem> uncheckedItems = shoppingListItems
         .map((ShoppingListItem item) {
           if (!item.checked) return item;
         })
         .whereType<ShoppingListItem>()
         .toList();
-    List<ShoppingListItem> checkedItems = shoppingList
+    List<ShoppingListItem> checkedItems = shoppingListItems
         .map((ShoppingListItem item) {
           if (item.checked) return item;
         })
@@ -516,9 +516,34 @@ class _ItemTile extends StatelessWidget {
                 const Spacer(flex: 1),
                 (item.recipeReferences != null &&
                         item.recipeReferences!.isNotEmpty)
-                    ? Icon(
-                        FontAwesomeIcons.kitchenSet,
-                        color: Colors.black.withOpacity(0.5),
+                    ? IconButton(
+                        onPressed: () {
+                          final List<RecipeReference> recipeReferences =
+                              shoppingListCubit
+                                  .state.shoppingList!.recipeReferences;
+                          final List<String?> linkedRecipeReferenceIDs = item
+                              .recipeReferences!
+                              .map((recipeElement) => recipeElement?.recipeId)
+                              .toList();
+                          final List<RecipeReference> linkedRecipeReferences =
+                              recipeReferences
+                                  .where(
+                                    (element) => linkedRecipeReferenceIDs
+                                        .contains(element.recipeId),
+                                  )
+                                  .toList();
+                          final SnackBar snackBar = SnackBar(
+                            content: Text(
+                                'Linked to: \n- ${linkedRecipeReferences.map((element) => element.recipe?.name).join('\n- ')}'),
+                          );
+
+                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.kitchenSet,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
                       )
                     : Container(),
                 IconButton(
