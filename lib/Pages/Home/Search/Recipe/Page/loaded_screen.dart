@@ -309,12 +309,92 @@ class _LoadedScreen extends StatelessWidget {
               },
             ),
           ),
-          recipeCubit.state.recipe?.tags != null &&
-                  recipeCubit.state.recipe!.tags!.isNotEmpty
+          recipe.tags != null && recipe.tags!.isNotEmpty
               ? _TagsCard(recipeCubit: recipeCubit)
               : Container(),
+          recipe.nutrition != null && recipe.settings?.showNutrition == true
+              ? Card(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Nutrition"),
+                        const Divider(),
+                        _NutritionInformationText(
+                          nutritionId: "Calories",
+                          quantity: recipe.nutrition!.calories ?? "",
+                          unit: "calories",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Fat",
+                          quantity: recipe.nutrition!.fatContent ?? "",
+                          unit: "grams",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Fiber",
+                          quantity: recipe.nutrition!.fiberContent ?? "",
+                          unit: "grams",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Protein",
+                          quantity: recipe.nutrition!.proteinContent ?? "",
+                          unit: "grams",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Sodium",
+                          quantity: recipe.nutrition!.sodiumContent ?? "",
+                          unit: "milligrams",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Sugar",
+                          quantity: recipe.nutrition!.sugarContent ?? "",
+                          unit: "grams",
+                        ),
+                        _NutritionInformationText(
+                          nutritionId: "Carbohydrate",
+                          quantity: recipe.nutrition!.carbohydrateContent ?? "",
+                          unit: "grams",
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container()
         ],
       ),
+    );
+  }
+}
+
+class _NutritionInformationText extends StatelessWidget {
+  const _NutritionInformationText({
+    required this.nutritionId,
+    required this.quantity,
+    required this.unit,
+  });
+
+  final String nutritionId;
+  final String quantity;
+  final String unit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          nutritionId,
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          "$quantity $unit",
+          style: const TextStyle(fontSize: 12),
+        )
+      ],
     );
   }
 }
