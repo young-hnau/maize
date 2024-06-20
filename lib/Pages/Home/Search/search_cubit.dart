@@ -43,7 +43,7 @@ class SearchCubit extends Cubit<SearchState> {
         List<Recipe>? recipes = value;
 
         if (recipes == null) {
-          throw Exception("An unknown error occuried while getting recipes");
+          throw Exception("An unknown error occured while getting recipes");
         }
 
         if (recipes.length < _pageSize) {
