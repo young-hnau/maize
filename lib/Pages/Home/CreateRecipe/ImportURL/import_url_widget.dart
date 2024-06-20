@@ -12,6 +12,7 @@ class ImportURLWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController textEditingController = TextEditingController();
     return BlocProvider(
       create: (_) => ImportURLCubit(
         appBloc: context.read<AppBloc>(),
@@ -38,6 +39,7 @@ class ImportURLWidget extends StatelessWidget {
                       "Scrape a recipe by url. Provide the url for the site you want to scrape and Mealie will attempt to scrape the recipe from that site and add it to your collection."),
                   const SizedBox(height: 10),
                   _RecipeURLTextFormField(
+                    textEditingController: textEditingController,
                     importURLCubit: context.read<ImportURLCubit>(),
                   ),
                   const SizedBox(height: 20),
@@ -115,11 +117,12 @@ class ImportURLWidget extends StatelessWidget {
 }
 
 class _RecipeURLTextFormField extends StatelessWidget {
-  _RecipeURLTextFormField({
+  const _RecipeURLTextFormField({
+    required this.textEditingController,
     required this.importURLCubit,
   });
 
-  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController textEditingController;
   final ImportURLCubit importURLCubit;
 
   @override
