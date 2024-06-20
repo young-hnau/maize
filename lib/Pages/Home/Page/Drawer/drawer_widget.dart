@@ -116,7 +116,7 @@ class _Drawer extends Drawer {
                           icon: Icons.sell,
                           text: "Tags",
                           onTap: () {
-                            homeCubit.setScreen(const TagsPage());
+                            homeCubit.setScreen(TagsPage());
                             Navigator.pop(context);
                           },
                         ),
