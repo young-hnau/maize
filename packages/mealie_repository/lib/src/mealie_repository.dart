@@ -850,11 +850,64 @@ class MealieRepository {
       return ratings;
     } on DioException catch (err) {
       if (err.response != null && err.response?.data['detail'] != null) {
+        errorStream.add(err.response?.data['detail'].toString());
+      } else {
+        errorStream.add(err.message);
+      }
+    }
+    return null;
+  }
+
+  /// Gets all tags from Mealie
+  ///
+  /// Return:
+  /// - TagResponse
+  Future<TagResponse?> getAllTags({
+    String? search,
+    String? groupId,
+    int? page,
+    int? perPage,
+    String? orderBy,
+    String? orderByNullPosition,
+    String? orderDirection,
+    String? queryFilter,
+    String? paginationSeed,
+  }) async {
+    final String? refreshToken =
+        await _getRefreshToken(token: user?.refreshToken);
+
+    final Map<String, dynamic> queryParameters = {};
+    if (search != null) queryParameters['search'] = search;
+    if (groupId != null) queryParameters['group_id'] = groupId;
+    if (page != null) queryParameters['page'] = page.toString();
+    if (perPage != null) queryParameters['perPage'] = perPage.toString();
+    if (orderBy != null) queryParameters['orderBy'] = orderBy;
+    if (orderByNullPosition != null)
+      queryParameters['orderByNullPosition'] = orderByNullPosition;
+    if (orderDirection != null)
+      queryParameters['orderDirection'] = orderDirection;
+    if (queryFilter != null) queryParameters['queryFilter'] = queryFilter;
+    if (paginationSeed != null)
+      queryParameters['paginationSeed'] = paginationSeed;
+
+    final Uri uri = this.uri.replace(
+        path: '/api/organizers/tags', queryParameters: queryParameters);
+    final Options options = Options(
+      headers: {'Authorization': 'Bearer $refreshToken'},
+      contentType: 'application/json',
+    );
+
+    try {
+      final Response response = await dio.getUri(uri, options: options);
+      return TagResponse.fromData(data: response.data);
+    } on DioException catch (err) {
+      if (err.response != null && err.response?.data['detail'] != null) {
         this.errorStream.add(err.response?.data['detail'].toString());
       } else {
         this.errorStream.add(err.message);
       }
     }
+
     return null;
   }
 }
