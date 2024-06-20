@@ -21,7 +21,7 @@ class Comment extends Equatable {
 
   static Comment fromData({required Map<String, dynamic> data}) {
     return Comment(
-      recipeId: data['receipId'],
+      recipeId: data['recipeId'],
       text: data['text'],
       id: data['id'],
       createdAt: data['createdAt'],
